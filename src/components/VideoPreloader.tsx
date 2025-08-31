@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { BookOpen, Play, Pause } from 'lucide-react'
+import { Play, Pause, Volume2, VolumeX } from 'lucide-react'
 
 interface WelcomeTextProps {
   isVisible: boolean
@@ -142,7 +142,6 @@ export default function VideoPreloader({ onComplete }: { onComplete: () => void 
   const [showWelcome, setShowWelcome] = useState(false)
   const [showPreloader, setShowPreloader] = useState(false)
   const [uiVisible, setUiVisible] = useState(true)
-  const [brandingVisible, setBrandingVisible] = useState(true)
   const videoRef = useRef<HTMLVideoElement>(null)
 
   useEffect(() => {
@@ -166,7 +165,6 @@ export default function VideoPreloader({ onComplete }: { onComplete: () => void 
   const handleVideoEnd = () => {
     // Fade out UI elements but keep video visible
     setUiVisible(false)
-    setBrandingVisible(false)
     
     // Brief pause, then show welcome text
     setTimeout(() => {
@@ -259,11 +257,15 @@ export default function VideoPreloader({ onComplete }: { onComplete: () => void 
             >
               <motion.button
                 onClick={toggleMute}
-                className="text-white text-sm font-mono tracking-wider transform rotate-90 origin-center hover:opacity-80 transition-opacity"
+                className="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center hover:bg-white/10 transition-colors transform rotate-90 origin-center"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                -SOUND-
+                {isMuted ? (
+                  <VolumeX size={30} className="text-white" />
+                ) : (
+                  <Volume2 size={30} className="text-white" />
+                )}
               </motion.button>
             </motion.div>
 

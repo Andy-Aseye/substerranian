@@ -90,7 +90,7 @@ export default function SearchPage() {
                 className="mb-6"
               >
                 <p className="text-gray-600">
-                  Found {books.length} book{books.length !== 1 ? 's' : ''} for "{query}"
+                  Found {books.length} book{books.length !== 1 ? 's' : ''} for &ldquo;{query}&rdquo;
                 </p>
               </motion.div>
 

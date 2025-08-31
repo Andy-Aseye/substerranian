@@ -46,7 +46,7 @@ export default function ScatteredBooksPage() {
   }
 
   // Function to assign random sizes to books
-  const getBookSize = (index: number) => {
+  const getBookSize = () => {
     const random = Math.random()
     
     // 50% chance of being normal size

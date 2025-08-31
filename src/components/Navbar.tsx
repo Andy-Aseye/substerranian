@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, Menu, X } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 export default function Navbar() {
@@ -42,7 +42,7 @@ export default function Navbar() {
 
         {/* Search Section - Center */}
         <div className="hidden md:flex items-center space-x-4 flex-1 justify-center max-w-md">
-          <p className="text-white text-sm">I'm looking for...</p>
+          <p className="text-white text-sm">I&apos;m looking for...</p>
           
           <form onSubmit={handleSearch} className="flex-1 max-w-xs">
             <div className="relative">
@@ -86,7 +86,7 @@ export default function Navbar() {
             className="md:hidden border-t border-gray-700/50"
           >
             <div className="px-6 py-4 space-y-4">
-              <p className="text-white text-sm">I'm looking for...</p>
+              <p className="text-white text-sm">I&apos;m looking for...</p>
               <form onSubmit={handleSearch}>
                 <div className="relative">
                   <input
