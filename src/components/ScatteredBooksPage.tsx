@@ -115,14 +115,14 @@ export default function ScatteredBooksPage() {
 
       <div className="relative min-h-screen p-8">
         {/* Title */}
-        <div className='flex justify-between items-center mb-4'>
+        <div className='flex justify-between items-center mb-2'>
         <div className="text-center">
           <h1 className="text-lg font-bold text-white tracking-widest">
             SUBTERRANEA&apos;S INVENTORY
           </h1>
         </div>
         <div className="flex items-center space-x-4">
-          <p className="text-white text-sm">I&apos;m looking for...</p>
+          {/* <p className="text-white text-sm">I&apos;m looking for...</p> */}
           
           <form onSubmit={handleSearch} className="flex-1 max-w-xs">
             <div className="relative">
@@ -130,8 +130,8 @@ export default function ScatteredBooksPage() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search for books..."
-                className="w-full px-4 py-2 rounded-full bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-200"
+                placeholder="I&apos;m looking for..."
+                className="w-full px-4 py-2 rounded-full bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#020EFF] transition-all duration-200"
               />
             </div>
           </form>
@@ -141,28 +141,28 @@ export default function ScatteredBooksPage() {
 
         {/* Two-Page Spread */}
         <div className="max-w-9xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2">
+          <div className="grid grid-cols-1 lg:grid-cols-2 border-t">
             
             {/* Left Page - 7x4 Grid */}
-            <div className="bg-gray-800 rounded-tl-lg rounded-bl-lg p-6 border-r-2 border-gray-700">
-              <div className="grid grid-cols-5 gap-3">
+            <div className="rounded-tl-lg rounded-bl-lg border-r border-white">
+              <div className="grid grid-cols-4">
                 {leftPage.map((book, index) => (
                   <motion.div
                     key={book.id}
                     initial={{ opacity: 0, scale: 0.8, rotate: Math.random() * 20 - 10 }}
                     animate={{ 
                       opacity: 1, 
-                      scale: 1, 
+                      scale: 0.8, 
                       rotate: Math.random() * 20 - 10
                     }}
                     transition={{ 
                       delay: index * 0.05, 
-                      duration: 0.6,
+                      duration: 0.8,
                       type: "spring",
                       stiffness: 100
                     }}
                     whileHover={{ 
-                      scale: 1.05,
+                      scale: 1,
                       rotate: 0,
                       z: 10
                     }}
@@ -172,34 +172,35 @@ export default function ScatteredBooksPage() {
                     <div className="transform scale-75 origin-center">
                       <BookCard book={book} />
                     </div>
+                    <div className='flex justify-end'><span className='text-white absolute bottom-3'>{index + 1}</span></div>
                   </motion.div>
                 ))}
               </div>
             </div>
 
-            {/* Right Page - 7x4 Grid + List */}
-            <div className="bg-gray-800 rounded-tr-lg rounded-br-lg p-6 border-l-1 border-gray-700">
+            {/* Right Page - 7x3 Grid + List */}
+            <div className="rounded-tr-lg rounded-br-lg border-l-1 border-gray-700">
               <div className="flex gap-4">
                 {/* Grid Section */}
                 <div className="flex-1">
-                  <div className="grid grid-cols-4 gap-3">
+                  <div className="grid grid-cols-3">
                     {rightPage.map((book, index) => (
                       <motion.div
                         key={book.id}
                         initial={{ opacity: 0, scale: 0.8, rotate: Math.random() * 20 - 10 }}
                         animate={{ 
                           opacity: 1, 
-                          scale: 1, 
+                          scale: 0.8, 
                           rotate: Math.random() * 20 - 10
                         }}
                         transition={{ 
                           delay: (index + leftPageBooks) * 0.05, 
-                          duration: 0.6,
+                          duration: 0.8,
                           type: "spring",
                           stiffness: 100
                         }}
                         whileHover={{ 
-                          scale: 1.05,
+                          scale: 1,
                           rotate: 0,
                           z: 10
                         }}
@@ -209,6 +210,7 @@ export default function ScatteredBooksPage() {
                         <div className="transform scale-75 origin-center">
                           <BookCard book={book} />
                         </div>
+                      <div className='flex justify-end'><span className='text-white absolute bottom-3'>{index + 17}</span></div>
                       </motion.div>
                     ))}
                   </div>
@@ -216,13 +218,13 @@ export default function ScatteredBooksPage() {
 
                 {/* Numbered List - Right Side */}
                 <div className="w-36 flex-shrink-0">
-                  <div className="bg-gray-800 rounded-lg p-4 border border-gray-700">
-                    <h3 className="text-white font-semibold mb-3">View All &gt;</h3>
+                  <div className="rounded-lg p-4">
+                    <h3 className="text-white font-semibold mb-3 text-center"><span className='border-b'>View All</span> &gt;</h3>
                     <div className="space-y-2 text-sm h-[100vh] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                       {currentPageBooks.map((book, index) => (
-                        <div key={book.id} className="text-white">
-                          <span className="text-white">{startIndex + index + 1}. </span>
-                          <span className="text-white text-xs">{book.title}</span>
+                        <div key={book.id} className="text-white flex items-baseline gap-1">
+                          <p className="text-white">{startIndex + index + 1}. </p>
+                          <p className="text-white text-xs">{book.title}</p>
                         </div>
                       ))}
                     </div>
@@ -233,9 +235,9 @@ export default function ScatteredBooksPage() {
           </div>
 
           {/* Pagination Controls */}
-          <div className="flex justify-center items-center mt-8 space-x-4">
+          {/* <div className="flex justify-center items-center mt-8 space-x-4"> */}
             {/* Previous Button */}
-            <motion.button
+            {/* <motion.button
               onClick={goToPrevPage}
               disabled={currentPage === 1}
               className={`p-2 rounded-full ${
@@ -247,10 +249,10 @@ export default function ScatteredBooksPage() {
               whileTap={currentPage !== 1 ? { scale: 0.95 } : {}}
             >
               <ChevronLeft size={20} />
-            </motion.button>
+            </motion.button> */}
 
             {/* Page Numbers */}
-            <div className="flex items-center space-x-2">
+            {/* <div className="flex items-center space-x-2">
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                 <motion.button
                   key={page}
@@ -266,10 +268,10 @@ export default function ScatteredBooksPage() {
                   {page}
                 </motion.button>
               ))}
-            </div>
+            </div> */}
 
             {/* Next Button */}
-            <motion.button
+            {/* <motion.button
               onClick={goToNextPage}
               disabled={currentPage === totalPages}
               className={`p-2 rounded-full ${
@@ -281,8 +283,9 @@ export default function ScatteredBooksPage() {
               whileTap={currentPage !== totalPages ? { scale: 0.95 } : {}}
             >
               <ChevronRight size={20} />
-            </motion.button>
-          </div>
+            </motion.button> */}
+          {/* </div> */}
+          
         </div>
       </div>
     </div>
