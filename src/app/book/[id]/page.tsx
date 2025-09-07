@@ -61,104 +61,108 @@ export default function BookDetailsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <motion.div
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        className="bg-white shadow-sm border-b border-gray-200"
-      >
-        <div className="max-w-7xl mx-auto px-4 py-4">
-          <button
-            onClick={() => router.back()}
-            className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-inter"
-          >
-            <ArrowLeft className="w-5 h-5 mr-2" />
-            Back to Library
-          </button>
-        </div>
-      </motion.div>
+    <div className="min-h-screen relative">
+      {/* Background Image with Blur Overlay */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src={book.cover_image_url}
+          alt=""
+          fill
+          className="object-cover"
+          sizes="100vw"
+          priority
+        />
+        <div className="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+      </div>
 
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-lg shadow-lg overflow-hidden"
+      {/* Content */}
+      <div className="relative z-10 min-h-screen">
+        {/* Header */}
+        {/* <motion.div
+          initial={{ y: -100 }}
+          animate={{ y: 0 }}
+          className="bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-200"
         >
-          <div className="md:flex">
-            {/* Book cover */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2 }}
-              className="md:w-1/3"
+          <div className="max-w-7xl mx-auto px-4 py-4">
+            <button
+              onClick={() => router.back()}
+              className="flex items-center text-gray-600 hover:text-gray-900 transition-colors font-inter"
             >
-              <div className="relative aspect-[3/4]">
-                <Image
-                  src={book.cover_image_url}
-                  alt={book.title}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
-              </div>
-            </motion.div>
-
-            {/* Book details */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4 }}
-              className="md:w-2/3 p-6 md:p-8"
-            >
-              <h1 className="text-3xl font-bold text-gray-900 mb-4 font-merriweather">
-                {book.title}
-              </h1>
-
-              <div className="space-y-4 mb-6">
-                <div className="flex items-center text-gray-600 font-inter">
-                  <User className="w-5 h-5 mr-2" />
-                  <span className="font-medium">{book.author}</span>
-                </div>
-
-                {book.published_year && (
-                  <div className="flex items-center text-gray-600 font-inter">
-                    <Calendar className="w-5 h-5 mr-2" />
-                    <span>{book.published_year}</span>
-                  </div>
-                )}
-
-                {book.genre && (
-                  <div className="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium font-inter">
-                    {book.genre}
-                  </div>
-                )}
-              </div>
-
-              <div className="mb-8">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2 font-merriweather">
-                  Description
-                </h3>
-                <p className="text-gray-700 leading-relaxed font-inter">
-                  {book.description}
-                </p>
-              </div>
-
-              <motion.a
-                href={book.external_link}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors font-inter"
-              >
-                <ExternalLink className="w-5 h-5 mr-2" />
-                Get This Book
-              </motion.a>
-            </motion.div>
+              <ArrowLeft className="w-5 h-5 mr-2" />
+              Back to Library
+            </button>
           </div>
-        </motion.div>
+        </motion.div> */}
+        {/* Yellow Card - Positioned absolutely on the left */}
+        <div className="absolute left-0 top-0 h-[100vh] w-[20vw] bg-[#E8DE37] p-6 overflow-y-auto z-20">
+          {/* Book Title */}
+          <h1 className="text-2xl font-bold text-black mb-2 font-inter">
+            {book.title}
+          </h1>
+          
+          {/* Authors */}
+          <p className="text-sm italic text-black mb-6 font-inter">
+            by {book.author}
+          </p>
+          
+          {/* Book Description */}
+          <div className="mb-6">
+            <p className="text-sm text-black leading-relaxed font-inter">
+              {book.description}
+            </p>
+          </div>
+          
+          {/* Purchase Information */}
+          <div className="mb-6 space-y-2">
+            <div className="flex justify-between items-start">
+              <span className="text-sm text-black font-inter">Buy here:</span>
+              <span className="text-sm font-semibold text-black font-inter">
+                {book.title} - {book.genre || 'Book Store'}
+              </span>
+            </div>
+            <div className="flex justify-between items-start">
+              <span className="text-sm text-black font-inter">Online:</span>
+              <span className="text-sm font-semibold text-black font-inter">
+                {book.external_link ? 'Available' : 'N/A'}
+              </span>
+            </div>
+          </div>
+          
+          {/* Location Information */}
+          <div className="mb-6">
+            <p className="text-sm text-black mb-2 font-inter">
+              Come and see this book at
+            </p>
+            <p className="text-sm font-semibold text-black mb-2 font-inter">
+              The House of Annetta
+            </p>
+            <div className="flex items-center text-sm text-black font-inter">
+              <div className="w-2 h-2 bg-black rounded-full mr-2"></div>
+              25 Princelet St, London E1 6QH
+            </div>
+          </div>
+          
+          {/* ISBN and Barcode */}
+          <div className="mt-auto">
+            <p className="text-sm text-black mb-2 font-inter">
+              ISBN {book.isbn || '978-1-908617-57-6'}
+            </p>
+            {/* Placeholder for barcode - you can add an actual barcode image here */}
+            <div className="w-full h-12 bg-black/10 border border-black/20 rounded flex items-center justify-center">
+              <span className="text-xs text-black/60 font-inter">Barcode</span>
+            </div>
+          </div>
+        </div>
+        <div onClick={() => router.push('/')} className='absolute right-20 top-10 space-x-2 text-white hover:underline focus:outline-none z-20 cursor-pointer'>
+          <div className='flex items-center space-x-2'>
+          <ArrowLeft className='w-5 h-5' /> <p><em><u>Back to Library</u></em></p>
+          </div>
+         
+        </div>
       </div>
     </div>
-  )
+  );
 }
+
+
+
