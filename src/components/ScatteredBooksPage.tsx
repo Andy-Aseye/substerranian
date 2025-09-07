@@ -109,7 +109,7 @@ export default function ScatteredBooksPage() {
         {/* Title */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-white tracking-widest">
-            SUBTERRANEA'S INVENTORY
+            SUBTERRANEA&apos;S INVENTORY
           </h1>
         </div>
 

@@ -121,7 +121,7 @@ export default function SearchContent() {
           {searchQuery && (
             <div className="mt-4 flex items-center justify-between">
               <p className="text-gray-300 font-inter">
-                Search results for: <span className="text-white font-semibold">"{searchQuery}"</span>
+                Search results for: <span className="text-white font-semibold">&quot;{searchQuery}&quot;</span>
               </p>
               <button
                 onClick={clearSearch}
