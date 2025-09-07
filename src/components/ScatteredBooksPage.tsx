@@ -2,21 +2,22 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import Navbar from './Navbar'
 import BookCard from './BookCard'
 import { supabase, Book } from '@/lib/supabase'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 export default function ScatteredBooksPage() {
   const [books, setBooks] = useState<Book[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
+  const [searchQuery, setSearchQuery] = useState('')
+  const router = useRouter()
   
   // Pagination settings
   const booksPerPage = 56 // Total books per inventory page (28 per page)
   const leftPageBooks = 25 // Books on left page (7x4)
-  const rightPageBooks = 25 // Books on right page (7x4)
 
   useEffect(() => {
     fetchBooks()
@@ -71,6 +72,13 @@ export default function ScatteredBooksPage() {
   const goToNextPage = () => goToPage(currentPage + 1)
   const goToPrevPage = () => goToPage(currentPage - 1)
 
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (searchQuery.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`)
+    }
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-900">
@@ -103,22 +111,40 @@ export default function ScatteredBooksPage() {
 
   return (
     <div className="min-h-screen bg-gray-900 relative overflow-hidden">
-      <Navbar />
-      
+      {/* <Navbar /> */}
+
       <div className="relative min-h-screen p-8">
         {/* Title */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white tracking-widest">
+        <div className='flex justify-between items-center mb-4'>
+        <div className="text-center">
+          <h1 className="text-lg font-bold text-white tracking-widest">
             SUBTERRANEA&apos;S INVENTORY
           </h1>
         </div>
+        <div className="flex items-center space-x-4">
+          <p className="text-white text-sm">I&apos;m looking for...</p>
+          
+          <form onSubmit={handleSearch} className="flex-1 max-w-xs">
+            <div className="relative">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search for books..."
+                className="w-full px-4 py-2 rounded-full bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/50 transition-all duration-200"
+              />
+            </div>
+          </form>
+        </div>
+        </div>
+        
 
         {/* Two-Page Spread */}
         <div className="max-w-9xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-1">
+          <div className="grid grid-cols-1 lg:grid-cols-2">
             
             {/* Left Page - 7x4 Grid */}
-            <div className="bg-gray-800 rounded-tl-lg rounded-bl-lg p-6 border border-gray-700">
+            <div className="bg-gray-800 rounded-tl-lg rounded-bl-lg p-6 border-r-2 border-gray-700">
               <div className="grid grid-cols-5 gap-3">
                 {leftPage.map((book, index) => (
                   <motion.div
@@ -152,7 +178,7 @@ export default function ScatteredBooksPage() {
             </div>
 
             {/* Right Page - 7x4 Grid + List */}
-            <div className="bg-gray-800 rounded-tr-lg rounded-br-lg p-6 border border-gray-700">
+            <div className="bg-gray-800 rounded-tr-lg rounded-br-lg p-6 border-l-1 border-gray-700">
               <div className="flex gap-4">
                 {/* Grid Section */}
                 <div className="flex-1">
@@ -192,7 +218,7 @@ export default function ScatteredBooksPage() {
                 <div className="w-36 flex-shrink-0">
                   <div className="bg-gray-800 rounded-lg p-4 border border-gray-700">
                     <h3 className="text-white font-semibold mb-3">View All &gt;</h3>
-                    <div className="space-y-2 text-sm h-[80vh] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                    <div className="space-y-2 text-sm h-[100vh] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                       {currentPageBooks.map((book, index) => (
                         <div key={book.id} className="text-white">
                           <span className="text-white">{startIndex + index + 1}. </span>
