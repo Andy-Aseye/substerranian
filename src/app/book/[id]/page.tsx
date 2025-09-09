@@ -116,8 +116,9 @@ export default function BookDetailsPage() {
           <div className="mb-6 space-y-2">
             <div className="flex justify-between items-start">
               <span className="text-sm text-black font-inter">Buy here:</span>
-              <span className="text-sm font-semibold text-black font-inter">
-                {book.title} - {book.genre || 'Book Store'}
+              <span className="text-sm font-semibold text-black font-inter text-right">
+                {book.title}
+                 {/* - {book.genre || 'Book Store'} */}
               </span>
             </div>
             <div className="flex justify-between items-start">
@@ -133,7 +134,7 @@ export default function BookDetailsPage() {
             <p className="text-sm text-black mb-2 font-inter">
               Come and see this book at
             </p>
-            <p className="text-sm font-semibold text-black mb-2 font-inter">
+            <p className="text-sm font-semibold text-black font-inter">
               The House of Annetta
             </p>
             <div className="flex items-center text-sm text-black font-inter">
@@ -153,11 +154,18 @@ export default function BookDetailsPage() {
             </div>
           </div>
         </div>
-        <div onClick={() => router.push('/')} className='absolute right-20 top-10 space-x-2 text-white hover:underline focus:outline-none z-20 cursor-pointer'>
-          <div className='flex items-center space-x-2'>
+        <div className='absolute right-20 top-10 space-x-2 text-white hover:underline focus:outline-none z-20'>
+          <div onClick={() => router.push('/')} className='flex items-center space-x-2 cursor-pointer' >
           <ArrowLeft className='w-5 h-5' /> <p><em><u>Back to Library</u></em></p>
           </div>
-         
+          <Image
+          src={book.cover_image_url}
+          alt=""
+          fill
+          className="object-contain !h-auto !relative"
+          // sizes="100%"
+          priority
+        />
         </div>
       </div>
     </div>
