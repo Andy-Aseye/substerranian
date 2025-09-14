@@ -16,6 +16,7 @@ export const supabase = createClient(
 export interface Book {
   id: string
   title: string
+  category?: string
   author: string
   description: string
   cover_image_url: string

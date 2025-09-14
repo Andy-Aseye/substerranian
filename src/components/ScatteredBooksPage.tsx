@@ -16,8 +16,8 @@ export default function ScatteredBooksPage() {
   const router = useRouter()
   
   // Pagination settings
-  const booksPerPage = 56 // Total books per inventory page (28 per page)
-  const leftPageBooks = 25 // Books on left page (7x4)
+  const booksPerPage = 27 // Total books per inventory page (28 per page)
+  const leftPageBooks = 15 // Books on left page (7x4)
 
   useEffect(() => {
     fetchBooks()
@@ -110,10 +110,21 @@ export default function ScatteredBooksPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 relative overflow-hidden">
+    <div 
+      className="relative overflow-hidden min-h-screen"
+      style={{
+        backgroundImage: 'url(/bg-image.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+      {/* Dark overlay for better text readability */}
+      <div className="absolute inset-0 bg-black bg-opacity-30"></div>
+      
       {/* <Navbar /> */}
 
-      <div className="relative min-h-screen p-8">
+      <div className="relative z-10 p-8">
         {/* Title */}
         <div className='flex justify-between items-center mb-2'>
         <div className="text-center">
@@ -141,11 +152,135 @@ export default function ScatteredBooksPage() {
 
         {/* Two-Page Spread */}
         <div className="max-w-9xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 border-t">
+          <div 
+            className="grid grid-cols-1 lg:grid-cols-2 relative"
+            style={{
+              borderTop: '2px solid rgba(255,255,255,0.2)',
+              borderImage: `
+                linear-gradient(
+                  to right,
+                  transparent 0%,
+                  rgba(255,255,255,0.2) 2%,
+                  rgba(255,255,255,0.1) 4%,
+                  rgba(255,255,255,0.2) 6%,
+                  rgba(255,255,255,0.1) 8%,
+                  rgba(255,255,255,0.2) 10%,
+                  rgba(255,255,255,0.1) 12%,
+                  rgba(255,255,255,0.2) 14%,
+                  rgba(255,255,255,0.1) 16%,
+                  rgba(255,255,255,0.2) 18%,
+                  rgba(255,255,255,0.1) 20%,
+                  rgba(255,255,255,0.2) 22%,
+                  rgba(255,255,255,0.1) 24%,
+                  rgba(255,255,255,0.2) 26%,
+                  rgba(255,255,255,0.1) 28%,
+                  rgba(255,255,255,0.2) 30%,
+                  rgba(255,255,255,0.1) 32%,
+                  rgba(255,255,255,0.2) 34%,
+                  rgba(255,255,255,0.1) 36%,
+                  rgba(255,255,255,0.2) 38%,
+                  rgba(255,255,255,0.1) 40%,
+                  rgba(255,255,255,0.2) 42%,
+                  rgba(255,255,255,0.1) 44%,
+                  rgba(255,255,255,0.2) 46%,
+                  rgba(255,255,255,0.1) 48%,
+                  rgba(255,255,255,0.2) 50%,
+                  rgba(255,255,255,0.1) 52%,
+                  rgba(255,255,255,0.2) 54%,
+                  rgba(255,255,255,0.1) 56%,
+                  rgba(255,255,255,0.2) 58%,
+                  rgba(255,255,255,0.1) 60%,
+                  rgba(255,255,255,0.2) 62%,
+                  rgba(255,255,255,0.1) 64%,
+                  rgba(255,255,255,0.2) 66%,
+                  rgba(255,255,255,0.1) 68%,
+                  rgba(255,255,255,0.2) 70%,
+                  rgba(255,255,255,0.1) 72%,
+                  rgba(255,255,255,0.2) 74%,
+                  rgba(255,255,255,0.1) 76%,
+                  rgba(255,255,255,0.2) 78%,
+                  rgba(255,255,255,0.1) 80%,
+                  rgba(255,255,255,0.2) 82%,
+                  rgba(255,255,255,0.1) 84%,
+                  rgba(255,255,255,0.2) 86%,
+                  rgba(255,255,255,0.1) 88%,
+                  rgba(255,255,255,0.2) 90%,
+                  rgba(255,255,255,0.1) 92%,
+                  rgba(255,255,255,0.2) 94%,
+                  rgba(255,255,255,0.1) 96%,
+                  rgba(255,255,255,0.2) 98%,
+                  transparent 100%
+                ) 1
+              `,
+              filter: 'blur(0.3px)'
+            }}
+          >
             
             {/* Left Page - 7x4 Grid */}
-            <div className="rounded-tl-lg rounded-bl-lg border-r border-white">
-              <div className="grid grid-cols-4">
+            <div 
+              className="rounded-tl-lg rounded-bl-lg pr-4"
+              style={{
+                borderRight: '2px solid rgba(255,255,255,0.2)',
+                borderImage: `
+                  linear-gradient(
+                    to bottom,
+                    transparent 0%,
+                    rgba(255,255,255,0.2) 2%,
+                    rgba(255,255,255,0.1) 4%,
+                    rgba(255,255,255,0.2) 6%,
+                    rgba(255,255,255,0.1) 8%,
+                    rgba(255,255,255,0.2) 10%,
+                    rgba(255,255,255,0.1) 12%,
+                    rgba(255,255,255,0.2) 14%,
+                    rgba(255,255,255,0.1) 16%,
+                    rgba(255,255,255,0.2) 18%,
+                    rgba(255,255,255,0.1) 20%,
+                    rgba(255,255,255,0.2) 22%,
+                    rgba(255,255,255,0.1) 24%,
+                    rgba(255,255,255,0.2) 26%,
+                    rgba(255,255,255,0.1) 28%,
+                    rgba(255,255,255,0.2) 30%,
+                    rgba(255,255,255,0.1) 32%,
+                    rgba(255,255,255,0.2) 34%,
+                    rgba(255,255,255,0.1) 36%,
+                    rgba(255,255,255,0.2) 38%,
+                    rgba(255,255,255,0.1) 40%,
+                    rgba(255,255,255,0.2) 42%,
+                    rgba(255,255,255,0.1) 44%,
+                    rgba(255,255,255,0.2) 46%,
+                    rgba(255,255,255,0.1) 48%,
+                    rgba(255,255,255,0.2) 50%,
+                    rgba(255,255,255,0.1) 52%,
+                    rgba(255,255,255,0.2) 54%,
+                    rgba(255,255,255,0.1) 56%,
+                    rgba(255,255,255,0.2) 58%,
+                    rgba(255,255,255,0.1) 60%,
+                    rgba(255,255,255,0.2) 62%,
+                    rgba(255,255,255,0.1) 64%,
+                    rgba(255,255,255,0.2) 66%,
+                    rgba(255,255,255,0.1) 68%,
+                    rgba(255,255,255,0.2) 70%,
+                    rgba(255,255,255,0.1) 72%,
+                    rgba(255,255,255,0.2) 74%,
+                    rgba(255,255,255,0.1) 76%,
+                    rgba(255,255,255,0.2) 78%,
+                    rgba(255,255,255,0.1) 80%,
+                    rgba(255,255,255,0.2) 82%,
+                    rgba(255,255,255,0.1) 84%,
+                    rgba(255,255,255,0.2) 86%,
+                    rgba(255,255,255,0.1) 88%,
+                    rgba(255,255,255,0.2) 90%,
+                    rgba(255,255,255,0.1) 92%,
+                    rgba(255,255,255,0.2) 94%,
+                    rgba(255,255,255,0.1) 96%,
+                    rgba(255,255,255,0.2) 98%,
+                    transparent 100%
+                  ) 1
+                `,
+                filter: 'blur(0.3px)'
+              }}
+            >
+              <div className="grid grid-cols-5">
                 {leftPage.map((book, index) => (
                   <motion.div
                     key={book.id}
@@ -172,18 +307,20 @@ export default function ScatteredBooksPage() {
                     <div className="transform scale-75 origin-center">
                       <BookCard book={book} />
                     </div>
-                    <div className='flex justify-end'><span className='text-white absolute bottom-3'>{index + 1}</span></div>
+                    <div className='flex justify-end'><span className='text-white absolute bottom-3'><span className='text-white absolute bottom-3 w-6 h-6 bg-gray-800 border border-white rounded-full flex items-center justify-center text-xs font-bold'>
+                        {index + 1}
+                      </span></span></div>
                   </motion.div>
                 ))}
               </div>
             </div>
 
             {/* Right Page - 7x3 Grid + List */}
-            <div className="rounded-tr-lg rounded-br-lg border-l-1 border-gray-700">
+            <div className="rounded-tr-lg rounded-br-lg">
               <div className="flex gap-4">
                 {/* Grid Section */}
                 <div className="flex-1">
-                  <div className="grid grid-cols-3">
+                  <div className="grid grid-cols-4 gap-x-1 gap-y-0">
                     {rightPage.map((book, index) => (
                       <motion.div
                         key={book.id}
@@ -207,10 +344,12 @@ export default function ScatteredBooksPage() {
                         className="relative group"
                       >
                         {/* BookCard */}
-                        <div className="transform scale-75 origin-center">
+                        <div className="transform scale-[0.70] origin-center">
                           <BookCard book={book} />
                         </div>
-                      <div className='flex justify-end'><span className='text-white absolute bottom-3'>{index + 17}</span></div>
+                        <div className='flex justify-end'><span className='text-white absolute bottom-3'><span className='text-white absolute bottom-3 w-6 h-6 bg-gray-800 border border-white rounded-full flex items-center justify-center text-xs font-bold'>
+                        {index + 17}
+                      </span></span></div>
                       </motion.div>
                     ))}
                   </div>
@@ -219,8 +358,13 @@ export default function ScatteredBooksPage() {
                 {/* Numbered List - Right Side */}
                 <div className="w-36 flex-shrink-0">
                   <div className="rounded-lg p-4">
-                    <h3 className="text-white font-semibold mb-3 text-center"><span className='border-b'>View All</span> &gt;</h3>
-                    <div className="space-y-2 text-sm h-[100vh] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                    <h3 
+                      className="text-white font-semibold mb-3 text-center cursor-pointer hover:text-blue-300 transition-colors"
+                      onClick={() => router.push('/viewallbooks')}
+                    >
+                      <span className='border-b'>View All</span> &gt;
+                    </h3>
+                    <div className="space-y-2 text-sm h-[70vh] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                       {currentPageBooks.map((book, index) => (
                         <div key={book.id} className="text-white flex items-baseline gap-1">
                           <p className="text-white">{startIndex + index + 1}. </p>
@@ -235,9 +379,9 @@ export default function ScatteredBooksPage() {
           </div>
 
           {/* Pagination Controls */}
-          {/* <div className="flex justify-center items-center mt-8 space-x-4"> */}
+          <div className="flex justify-center items-center mt-8 space-x-4">
             {/* Previous Button */}
-            {/* <motion.button
+            <motion.button
               onClick={goToPrevPage}
               disabled={currentPage === 1}
               className={`p-2 rounded-full ${
@@ -249,29 +393,10 @@ export default function ScatteredBooksPage() {
               whileTap={currentPage !== 1 ? { scale: 0.95 } : {}}
             >
               <ChevronLeft size={20} />
-            </motion.button> */}
-
-            {/* Page Numbers */}
-            {/* <div className="flex items-center space-x-2">
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                <motion.button
-                  key={page}
-                  onClick={() => goToPage(page)}
-                  className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-colors ${
-                    page === currentPage
-                      ? 'bg-yellow-400 text-gray-900'
-                      : 'bg-gray-700 text-white hover:bg-gray-600'
-                  }`}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  {page}
-                </motion.button>
-              ))}
-            </div> */}
+            </motion.button>
 
             {/* Next Button */}
-            {/* <motion.button
+            <motion.button
               onClick={goToNextPage}
               disabled={currentPage === totalPages}
               className={`p-2 rounded-full ${
@@ -283,8 +408,8 @@ export default function ScatteredBooksPage() {
               whileTap={currentPage !== totalPages ? { scale: 0.95 } : {}}
             >
               <ChevronRight size={20} />
-            </motion.button> */}
-          {/* </div> */}
+            </motion.button>
+          </div>
           
         </div>
       </div>

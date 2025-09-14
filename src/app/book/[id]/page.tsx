@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { ArrowLeft, ExternalLink, Calendar, User } from 'lucide-react'
+import { ArrowLeft, ExternalLink, Calendar, User, MapPin } from 'lucide-react'
 import { supabase, Book } from '@/lib/supabase'
 
 export default function BookDetailsPage() {
@@ -138,7 +138,7 @@ export default function BookDetailsPage() {
               The House of Annetta
             </p>
             <div className="flex items-center text-sm text-black font-inter">
-              <div className="w-2 h-2 bg-black rounded-full mr-2"></div>
+              <MapPin className="w-4 h-4 mr-2" />
               25 Princelet St, London E1 6QH
             </div>
           </div>
@@ -156,7 +156,7 @@ export default function BookDetailsPage() {
         </div>
         <div className='absolute right-20 top-10 space-x-2 text-white hover:underline focus:outline-none z-20'>
           <div onClick={() => router.push('/')} className='flex items-center space-x-2 cursor-pointer' >
-          <ArrowLeft className='w-5 h-5' /> <p><em><u>Back to Library</u></em></p>
+          <ArrowLeft className='w-5 h-5' /> <p><em>Back to Library</em></p>
           </div>
           <Image
           src={book.cover_image_url}
