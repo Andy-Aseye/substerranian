@@ -134,7 +134,22 @@ export default function ViewAllBooks() {
         <div className="h-full flex flex-col">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-4xl text-center text-[#020eff] mb-4 underline"> <ul>Contribute To The Library!</ul></h1>
+            <motion.h1 
+              animate={{
+                color: ["#ff0000", "#00ff00", "#0000ff", "#00FFFF", "#FF00FF", "#FFFF00"]
+              }}
+            transition = {{
+              // duration: 1,
+              times: [0, 0.2, 0.4, 0.6, 0.8, 1],
+              repeat: Infinity,
+              repeatType: "loop"
+
+            }}
+            className="text-4xl text-center mb-4 underline"
+            
+            > 
+              <a href='https://docs.google.com/document/d/1GDa9C1okh_iwo2RgMB35RCZU4oCeRCFKHlliBInUDLo/edit?tab=t.0#heading=h.690theuvfh12' target='_blank'>Contribute To The Library!</a>
+            </motion.h1>
           </div>
 
           {/* Book List */}

@@ -6,6 +6,7 @@ import BookCard from './BookCard'
 import { supabase, Book } from '@/lib/supabase'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 
 export default function ScatteredBooksPage() {
   const [books, setBooks] = useState<Book[]>([])
@@ -132,6 +133,15 @@ export default function ScatteredBooksPage() {
             SUBTERRANEA&apos;S INVENTORY
           </h1>
         </div>
+
+        <Image
+          src="/logo.png"
+          alt="SUBTERRANEA"
+          fill
+          // className="object-cover transition-transform duration-300 hover:scale-110"
+          // sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 16vw"
+        />
+        
         <div className="flex items-center space-x-4">
           {/* <p className="text-white text-sm">I&apos;m looking for...</p> */}
           
@@ -348,7 +358,7 @@ export default function ScatteredBooksPage() {
                           <BookCard book={book} />
                         </div>
                         <div className='flex justify-end'><span className='text-white absolute bottom-3'><span className='text-white absolute bottom-3 w-6 h-6 bg-gray-800 border border-white rounded-full flex items-center justify-center text-xs font-bold'>
-                        {index + 17}
+                        {index + 16}
                       </span></span></div>
                       </motion.div>
                     ))}
@@ -379,9 +389,9 @@ export default function ScatteredBooksPage() {
           </div>
 
           {/* Pagination Controls */}
-          <div className="flex justify-center items-center mt-8 space-x-4">
+          {/* <div className="flex justify-center items-center mt-8 space-x-4"> */}
             {/* Previous Button */}
-            <motion.button
+            {/* <motion.button
               onClick={goToPrevPage}
               disabled={currentPage === 1}
               className={`p-2 rounded-full ${
@@ -393,10 +403,10 @@ export default function ScatteredBooksPage() {
               whileTap={currentPage !== 1 ? { scale: 0.95 } : {}}
             >
               <ChevronLeft size={20} />
-            </motion.button>
+            </motion.button> */}
 
             {/* Next Button */}
-            <motion.button
+            {/* <motion.button
               onClick={goToNextPage}
               disabled={currentPage === totalPages}
               className={`p-2 rounded-full ${
@@ -408,8 +418,8 @@ export default function ScatteredBooksPage() {
               whileTap={currentPage !== totalPages ? { scale: 0.95 } : {}}
             >
               <ChevronRight size={20} />
-            </motion.button>
-          </div>
+            </motion.button> */}
+          {/* </div> */}
           
         </div>
       </div>
