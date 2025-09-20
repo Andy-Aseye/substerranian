@@ -24,6 +24,7 @@ export interface Book {
   isbn?: string
   published_year?: number
   genre?: string
+  booknumber: number
   created_at: string
   updated_at: string
 }
