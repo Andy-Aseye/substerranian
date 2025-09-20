@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import BookCard from './BookCard'
 import { supabase, Book } from '@/lib/supabase'
-import { ChevronLeft, ChevronRight, X } from 'lucide-react'
+import { X } from 'lucide-react'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import Image from 'next/image'
 
@@ -36,7 +36,7 @@ export default function ScatteredBooksPage() {
   // Sync searchInput with URL parameter on component mount
   useEffect(() => {
     setSearchInput(searchQuery)
-  }, [])
+  }, [searchQuery])
 
   // Handle search when URL query parameter changes
   useEffect(() => {
@@ -110,8 +110,6 @@ const fetchBooks = async () => {
     }
   }
 
-  const goToNextPage = () => goToPage(currentPage + 1)
-  const goToPrevPage = () => goToPage(currentPage - 1)
 
   const performSearch = async (query: string) => {
     if (!query.trim()) {
@@ -266,7 +264,7 @@ const fetchBooks = async () => {
         {isSearchMode && (
           <div className="text-center mb-4">
             <p className="text-white text-sm">
-              Found {searchResults.length} book{searchResults.length !== 1 ? 's' : ''} for "{searchQuery}"
+              Found {searchResults.length} book{searchResults.length !== 1 ? 's' : ''} for &quot;{searchQuery}&quot;
             </p>
           </div>
         )}
@@ -516,7 +514,7 @@ const fetchBooks = async () => {
                       <span className='border-b'>View All</span> &gt;
                     </h3>
                     <div className="space-y-2 text-sm h-[70vh] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-                       {currentPageBooks.map((book, index) => (
+                       {currentPageBooks.map((book) => (
                          <div 
                            key={book.id} 
                            className={`text-white flex items-baseline gap-1 cursor-pointer transition-all duration-200 rounded px-2 py-1 ${
