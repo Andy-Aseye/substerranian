@@ -245,7 +245,7 @@ export default function VideoPreloader({ onComplete }: { onComplete: () => void 
                   timeZone: 'Europe/London' 
                 })} GMT
               </div>
-              <div><p className='text-xs'>Powered by:</p><p  className="text-sm font-bold">Incandescence</p></div>
+              <div><p className='text-xs'>Powered by:</p><p  className="text-sm font-bold">Create with Iridescence</p></div>
              
             </motion.div>
 

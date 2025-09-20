@@ -139,7 +139,9 @@ export default function BookDetailsPage() {
             </p>
             <div className="flex items-center text-sm text-black font-inter">
               <MapPin className="w-4 h-4 mr-2" />
-              25 Princelet St, London E1 6QH
+              <a href='https://maps.app.goo.gl/xGb4pyZVQ7V8bPe79' target='_blank' className='cursor-pointer hover:text-blue-900 transition-colors'>
+                25 Princelet St, London E1 6QH
+              </a>
             </div>
           </div>
           
