@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { supabase, Book } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
+import { ArrowLeft } from 'lucide-react'
 
 export default function ViewAllBooks() {
   const [books, setBooks] = useState<Book[]>([])
@@ -134,6 +135,9 @@ export default function ViewAllBooks() {
       <div className="w-1/2 bg-gray-50 p-8">
         <div className="h-full flex flex-col">
           {/* Header */}
+          <div onClick={() => router.push('/')} className='flex items-center space-x-2 cursor-pointer justify-end hover:underline mb-2' >
+          <ArrowLeft className='w-5 h-5' /> <p><em>Back to Library</em></p>
+          </div>
           <div className="mb-8">
             <motion.h1 
               animate={{
