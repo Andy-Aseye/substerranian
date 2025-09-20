@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import BookCard from './BookCard'
 import { supabase, Book } from '@/lib/supabase'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import { ChevronLeft, ChevronRight, X } from 'lucide-react'
+import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import Image from 'next/image'
 
 export default function ScatteredBooksPage() {
@@ -13,8 +13,17 @@ export default function ScatteredBooksPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
-  const [searchQuery, setSearchQuery] = useState('')
+  const [searchInput, setSearchInput] = useState('')
+  const [isSearching, setIsSearching] = useState(false)
+  const [searchResults, setSearchResults] = useState<Book[]>([])
+  const [hoveredBookId, setHoveredBookId] = useState<string | null>(null)
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const pathname = usePathname()
+  
+  // Get search query from URL parameters
+  const searchQuery = searchParams.get('q') || ''
+  const isSearchMode = searchQuery.length > 0
   
   // Pagination settings
   const booksPerPage = 27 // Total books per inventory page (28 per page)
@@ -24,40 +33,71 @@ export default function ScatteredBooksPage() {
     fetchBooks()
   }, [])
 
-  const fetchBooks = async () => {
-    try {
-      if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-        setError('Supabase is not configured. Please set up your environment variables.')
-        setLoading(false)
-        return
-      }
+  // Sync searchInput with URL parameter on component mount
+  useEffect(() => {
+    setSearchInput(searchQuery)
+  }, [])
 
-      const { data, error } = await supabase
-        .from('books')
-        .select('*')
-        .order('created_at', { ascending: false })
-
-      if (error) {
-        console.error('Supabase error:', error)
-        setError('Failed to load books from database')
-        setBooks([])
-      } else {
-        setBooks(data || [])
-      }
-    } catch (error) {
-      console.error('Error fetching books:', error)
-      setError('Failed to load books')
-      setBooks([])
-    } finally {
-      setLoading(false)
+  // Handle search when URL query parameter changes
+  useEffect(() => {
+    if (searchQuery.trim()) {
+      performSearch(searchQuery.trim())
+    } else {
+      setSearchResults([])
     }
-  }
+  }, [searchQuery])
 
+ // ... existing code ...
+
+const fetchBooks = async () => {
+  try {
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+      setError('Supabase is not configured. Please set up your environment variables.')
+      setLoading(false)
+      return
+    }
+
+    // Fetch all books without any ordering
+    const { data, error } = await supabase
+      .from('books')
+      .select('*')
+
+    if (error) {
+      console.error('Supabase error:', error)
+      setError('Failed to load books from database')
+      setBooks([])
+    } else {
+      // Shuffle the books using Fisher-Yates algorithm
+      const booksArray = data || []
+      const shuffledBooks = [...booksArray]
+      
+      // Perform shuffle
+      for (let i = shuffledBooks.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffledBooks[i], shuffledBooks[j]] = [shuffledBooks[j], shuffledBooks[i]]
+      }
+      
+      // Set the shuffled books and stop loading
+      setBooks(shuffledBooks)
+    }
+  } catch (error) {
+    console.error('Error fetching books:', error)
+    setError('Failed to load books')
+    setBooks([])
+  } finally {
+    setLoading(false)
+  }
+}
+
+// ... existing code ...
+  // Determine which books to display (search results or all books)
+  const displayBooks = isSearchMode ? searchResults : books
+  
   // Calculate pagination
-  const totalPages = Math.ceil(books.length / booksPerPage)
+  const totalPages = Math.ceil(displayBooks.length / booksPerPage)
   const startIndex = (currentPage - 1) * booksPerPage
   const endIndex = startIndex + booksPerPage
-  const currentPageBooks = books.slice(startIndex, endIndex)
+  const currentPageBooks = displayBooks.slice(startIndex, endIndex)
   
   // Split current page books into left and right
   const leftPage = currentPageBooks.slice(0, leftPageBooks)
@@ -73,11 +113,57 @@ export default function ScatteredBooksPage() {
   const goToNextPage = () => goToPage(currentPage + 1)
   const goToPrevPage = () => goToPage(currentPage - 1)
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (searchQuery.trim()) {
-      router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`)
+  const performSearch = async (query: string) => {
+    if (!query.trim()) {
+      setSearchResults([])
+      return
     }
+
+    try {
+      setIsSearching(true)
+      setError(null)
+
+      const { data, error } = await supabase
+        .from('books')
+        .select('*')
+        .or(`title.ilike.%${query}%,author.ilike.%${query}%,description.ilike.%${query}%,genre.ilike.%${query}%,category.ilike.%${query}%`)
+        .order('created_at', { ascending: false })
+
+      if (error) {
+        console.error('Supabase error:', error)
+        setError('Failed to search books')
+        setSearchResults([])
+      } else {
+        setSearchResults(data || [])
+        setCurrentPage(1) // Reset to first page when searching
+      }
+    } catch (error) {
+      console.error('Error searching books:', error)
+      setError('Failed to search books')
+      setSearchResults([])
+    } finally {
+      setIsSearching(false)
+    }
+  }
+
+  const updateSearchQuery = (query: string) => {
+    const params = new URLSearchParams(searchParams.toString())
+    if (query.trim()) {
+      params.set('q', query.trim())
+    } else {
+      params.delete('q')
+    }
+    router.push(`${pathname}?${params.toString()}`)
+  }
+
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    updateSearchQuery(searchInput)
+  }
+
+  const clearSearch = () => {
+    setSearchInput('')
+    updateSearchQuery('')
   }
 
   if (loading) {
@@ -149,19 +235,60 @@ export default function ScatteredBooksPage() {
             <div className="relative">
               <input
                 type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                name="search"
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
                 placeholder="I&apos;m looking for..."
                 className="w-full px-4 py-2 rounded-full bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#020EFF] transition-all duration-200"
+                disabled={isSearching}
               />
+              {searchInput && (
+                <button
+                  type="button"
+                  onClick={clearSearch}
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 p-1 rounded-full hover:bg-gray-200 transition-colors"
+                  disabled={isSearching}
+                >
+                  <X className="w-4 h-4 text-gray-500" />
+                </button>
+              )}
+              {isSearching && (
+                <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-500"></div>
+                </div>
+              )}
             </div>
           </form>
         </div>
         </div>
-        
 
-        {/* Two-Page Spread */}
-        <div className="max-w-9xl mx-auto">
+        {/* Search Results Info */}
+        {isSearchMode && (
+          <div className="text-center mb-4">
+            <p className="text-white text-sm">
+              Found {searchResults.length} book{searchResults.length !== 1 ? 's' : ''} for "{searchQuery}"
+            </p>
+          </div>
+        )}
+
+        {/* No Results Message */}
+        {isSearchMode && searchResults.length === 0 && !isSearching && (
+          <div className="text-center py-12">
+            <div className="text-gray-400 mb-4">
+              <X className="w-16 h-16 mx-auto" />
+            </div>
+            <h3 className="text-xl font-semibold text-white mb-2">
+              No books found
+            </h3>
+            <p className="text-gray-300">
+              Try adjusting your search terms
+            </p>
+          </div>
+        )}
+
+        {/* Two-Page Spread - Only show if we have results or not in search mode */}
+        {(!isSearchMode || (isSearchMode && searchResults.length > 0)) && (
+          <div className="max-w-9xl mx-auto">
           <div 
             className="grid grid-cols-1 lg:grid-cols-2 relative"
             style={{
@@ -296,9 +423,10 @@ export default function ScatteredBooksPage() {
                     key={book.id}
                     initial={{ opacity: 0, scale: 0.8, rotate: Math.random() * 20 - 10 }}
                     animate={{ 
-                      opacity: 1, 
-                      scale: 0.8, 
-                      rotate: Math.random() * 20 - 10
+                      opacity: hoveredBookId && hoveredBookId !== book.id ? 0.3 : 1, 
+                      scale: hoveredBookId === book.id ? 1 : 0.8, 
+                      rotate: hoveredBookId === book.id ? 0 : Math.random() * 20 - 10,
+                      filter: hoveredBookId && hoveredBookId !== book.id ? 'blur(2px)' : 'blur(0px)'
                     }}
                     transition={{ 
                       delay: index * 0.05, 
@@ -311,15 +439,21 @@ export default function ScatteredBooksPage() {
                       rotate: 0,
                       z: 10
                     }}
-                    className="relative group"
+                    className={`relative group transition-all duration-300 ${
+                      hoveredBookId === book.id 
+                        ? 'z-20' 
+                        : hoveredBookId && hoveredBookId !== book.id 
+                          ? 'opacity-30 blur-sm' 
+                          : ''
+                    }`}
                   >
                     {/* BookCard */}
                     <div className="transform scale-75 origin-center">
                       <BookCard book={book} />
                     </div>
-                    <div className='flex justify-end'><span className='text-white absolute bottom-3'><span className='text-white absolute bottom-3 w-6 h-6 bg-gray-800 border border-white rounded-full flex items-center justify-center text-xs font-bold'>
-                        {index + 1}
-                      </span></span></div>
+                     <div className='flex justify-end'><span className='text-white absolute bottom-3'><span className='text-white absolute bottom-3 w-6 h-6 bg-gray-800 border border-white rounded-full flex items-center justify-center text-xs font-bold'>
+                         {book.booknumber}
+                       </span></span></div>
                   </motion.div>
                 ))}
               </div>
@@ -336,9 +470,10 @@ export default function ScatteredBooksPage() {
                         key={book.id}
                         initial={{ opacity: 0, scale: 0.8, rotate: Math.random() * 20 - 10 }}
                         animate={{ 
-                          opacity: 1, 
-                          scale: 0.8, 
-                          rotate: Math.random() * 20 - 10
+                          opacity: hoveredBookId && hoveredBookId !== book.id ? 0.3 : 1, 
+                          scale: hoveredBookId === book.id ? 1 : 0.8, 
+                          rotate: hoveredBookId === book.id ? 0 : Math.random() * 20 - 10,
+                          filter: hoveredBookId && hoveredBookId !== book.id ? 'blur(2px)' : 'blur(0px)'
                         }}
                         transition={{ 
                           delay: (index + leftPageBooks) * 0.05, 
@@ -351,15 +486,21 @@ export default function ScatteredBooksPage() {
                           rotate: 0,
                           z: 10
                         }}
-                        className="relative group"
+                        className={`relative group transition-all duration-300 ${
+                          hoveredBookId === book.id 
+                            ? 'z-20' 
+                            : hoveredBookId && hoveredBookId !== book.id 
+                              ? 'opacity-30 blur-sm' 
+                              : ''
+                        }`}
                       >
                         {/* BookCard */}
                         <div className="transform scale-[0.70] origin-center">
                           <BookCard book={book} />
                         </div>
-                        <div className='flex justify-end'><span className='text-white absolute bottom-3'><span className='text-white absolute bottom-3 w-6 h-6 bg-gray-800 border border-white rounded-full flex items-center justify-center text-xs font-bold'>
-                        {index + 16}
-                      </span></span></div>
+                         <div className='flex justify-end'><span className='text-white absolute bottom-3'><span className='text-white absolute bottom-3 w-6 h-6 bg-gray-800 border border-white rounded-full flex items-center justify-center text-xs font-bold'>
+                         {book.booknumber}
+                       </span></span></div>
                       </motion.div>
                     ))}
                   </div>
@@ -375,12 +516,21 @@ export default function ScatteredBooksPage() {
                       <span className='border-b'>View All</span> &gt;
                     </h3>
                     <div className="space-y-2 text-sm h-[70vh] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-                      {currentPageBooks.map((book, index) => (
-                        <div key={book.id} className="text-white flex items-baseline gap-1">
-                          <p className="text-white">{startIndex + index + 1}. </p>
-                          <p className="text-white text-xs">{book.title}</p>
-                        </div>
-                      ))}
+                       {currentPageBooks.map((book, index) => (
+                         <div 
+                           key={book.id} 
+                           className={`text-white flex items-baseline gap-1 cursor-pointer transition-all duration-200 rounded px-2 py-1 ${
+                             hoveredBookId === book.id 
+                               ? 'underline decoration-white-400 decoration-1 underline-offset-2' 
+                               : 'hover:bg-white hover:bg-opacity-10'
+                           }`}
+                           onMouseEnter={() => setHoveredBookId(book.id)}
+                           onMouseLeave={() => setHoveredBookId(null)}
+                         >
+                           <p className="text-white">{book.booknumber}. </p>
+                           <p className="text-white text-xs">{book.title}</p>
+                         </div>
+                       ))}
                     </div>
                   </div>
                 </div>
@@ -419,9 +569,10 @@ export default function ScatteredBooksPage() {
             >
               <ChevronRight size={20} />
             </motion.button> */}
-          {/* </div> */}
-          
-        </div>
+           {/* </div> */}
+           
+         </div>
+        )}
       </div>
     </div>
   )
