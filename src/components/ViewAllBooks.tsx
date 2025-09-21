@@ -12,7 +12,6 @@ export default function ViewAllBooks() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [hoveredBook, setHoveredBook] = useState<Book | null>(null)
-  const [defaultBook, setDefaultBook] = useState<Book | null>(null)
   const router = useRouter()
 
   useEffect(() => {
@@ -38,10 +37,6 @@ export default function ViewAllBooks() {
         setBooks([])
       } else {
         setBooks(data || [])
-        // Set the first book as default if available
-        if (data && data.length > 0) {
-          setDefaultBook(data[0])
-        }
       }
     } catch (error) {
       console.error('Error fetching books:', error)
@@ -92,26 +87,24 @@ export default function ViewAllBooks() {
       <div className="w-1/2 relative">
         <div className="h-screen flex items-center justify-center">
           <motion.div
-            key={hoveredBook?.id || defaultBook?.id || 'default'}
+            key={hoveredBook?.id || 'default'}
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, ease: "easeOut" }}
             className="relative w-full h-full"
           >
-            {(hoveredBook || defaultBook)?.cover_image_url ? (
+            {(hoveredBook)?.cover_image_url ? (
               <img
-                src={(hoveredBook || defaultBook)?.cover_image_url}
-                alt={(hoveredBook || defaultBook)?.title}
+                src={(hoveredBook)?.cover_image_url}
+                alt={(hoveredBook)?.title}
                 className="w-full h-full object-cover"
               />
             ) : (
-              <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-                <div className="text-center text-gray-600">
-                  <div className="text-6xl mb-4">🎨</div>
-                  <p className="text-xl font-semibold">Hover over a book</p>
-                  <p className="text-gray-500">to see its cover</p>
-                </div>
-              </div>
+              <img
+                src={"/mission.png"}
+                alt={"Subterranea's Mission"}
+                className="w-full h-full object-cover"
+              />
             )}
           </motion.div>
         </div>
