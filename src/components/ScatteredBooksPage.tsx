@@ -209,7 +209,7 @@ const fetchBooks = async () => {
       
       {/* <Navbar /> */}
 
-      <div className="relative z-10 p-8">
+      <div className="relative z-10 p-8 min-h-screen">
         {/* Title */}
         <div className='flex justify-between items-center mb-2'>
         <div className="text-center">
@@ -288,7 +288,7 @@ const fetchBooks = async () => {
         {(!isSearchMode || (isSearchMode && searchResults.length > 0)) && (
           <div className="max-w-9xl mx-auto">
           <div 
-            className="grid grid-cols-1 lg:grid-cols-2 relative"
+            className="grid grid-cols-1 lg:grid-cols-2 relative min-h-screen"
             style={{
               borderTop: '2px solid rgba(255,255,255,0.2)',
               borderImage: `
