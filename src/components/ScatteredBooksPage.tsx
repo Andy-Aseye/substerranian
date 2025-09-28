@@ -211,7 +211,7 @@ const fetchBooks = async () => {
 
       <div className="relative z-10 p-8">
         {/* Title */}
-        <div className='flex justify-between items-center mb-2'>
+        <div className='flex flex-col md:flex-row justify-between items-center mb-2 gap-4 md:gap-0'>
         <div className="text-center">
           <h1 className="text-lg font-bold text-white tracking-widest">
             SUBTERRANEA&apos;S INVENTORY
@@ -226,10 +226,10 @@ const fetchBooks = async () => {
           // sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 16vw"
         />
         
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-4 w-full md:w-auto">
           {/* <p className="text-white text-sm">I&apos;m looking for...</p> */}
           
-          <form onSubmit={handleSearch} className="flex-1 max-w-xs">
+          <form onSubmit={handleSearch} className="flex-1 max-w-xs w-full">
             <div className="relative">
               <input
                 type="text"
@@ -449,7 +449,7 @@ const fetchBooks = async () => {
                     <div className="transform scale-75 origin-center">
                       <BookCard book={book} />
                     </div>
-                     <div className='flex justify-end'><span className='text-white absolute bottom-3'><span className='text-white absolute bottom-3 w-6 h-6 bg-gray-800 border border-white rounded-full flex items-center justify-center text-xs font-bold'>
+                     <div className='flex justify-end hidden md:block'><span className='text-white absolute bottom-3'><span className='text-white absolute bottom-3 w-6 h-6 bg-gray-800 border border-white rounded-full flex items-center justify-center text-xs font-bold'>
                          {book.booknumber}
                        </span></span></div>
                   </motion.div>
@@ -496,7 +496,7 @@ const fetchBooks = async () => {
                         <div className="transform scale-[0.70] origin-center">
                           <BookCard book={book} />
                         </div>
-                         <div className='flex justify-end'><span className='text-white absolute bottom-3'><span className='text-white absolute bottom-3 w-6 h-6 bg-gray-800 border border-white rounded-full flex items-center justify-center text-xs font-bold'>
+                         <div className='flex justify-end hidden md:block'><span className='text-white absolute bottom-3'><span className='text-white absolute bottom-3 w-6 h-6 bg-gray-800 border border-white rounded-full flex items-center justify-center text-xs font-bold'>
                          {book.booknumber}
                        </span></span></div>
                       </motion.div>
@@ -505,7 +505,7 @@ const fetchBooks = async () => {
                 </div>
 
                 {/* Numbered List - Right Side */}
-                <div className="w-36 flex-shrink-0">
+                <div className="w-36 flex-shrink-0 hidden md:block">
                   <div className="rounded-lg p-4">
                     <h3 
                       className="text-white font-semibold mb-3 text-center cursor-pointer hover:text-blue-300 transition-colors"
