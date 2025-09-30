@@ -65,38 +65,30 @@ export default function BookDetailsPage() {
       {/* Mobile Layout */}
       <div className="md:hidden">
         {/* Top Section - Red Background with Back Button and Book Cover */}
-        <div className="bg-red-600 py-8 px-4">
+        <div className="">
           {/* Back Button */}
-          <div className="mb-6">
+          <div className="">
             <button
               onClick={() => router.push('/')}
-              className="text-white text-sm hover:underline focus:outline-none"
+              className="text-white text-sm hover:underline focus:outline-none absolute top-5 left-5 z-10"
             >
               &lt; Back to Library
             </button>
           </div>
           
           {/* Book Cover */}
-          <div className="flex items-center justify-center">
-            <div className="relative w-48 h-64">
               <Image
                 src={book.cover_image_url}
                 alt={book.title}
                 fill
-                className="object-contain"
+                className="!relative"
                 sizes="(max-width: 768px) 192px"
                 priority
               />
-            </div>
-          </div>
         </div>
 
         {/* Middle Section - Red Background with Large Title */}
-        <div className="bg-red-600 py-8 px-4">
-          <h1 className="text-4xl md:text-5xl font-bold text-black text-center leading-tight">
-            {book.title.toUpperCase()}
-          </h1>
-        </div>
+
 
         {/* Bottom Section - Yellow Background with Details */}
         <div className="bg-yellow-400 p-6 min-h-screen">
