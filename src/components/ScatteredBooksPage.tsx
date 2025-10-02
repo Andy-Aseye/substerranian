@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import BookCard from './BookCard'
 import { supabase, Book } from '@/lib/supabase'
-import { X } from 'lucide-react'
+import { ArrowRight, X } from 'lucide-react'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import Image from 'next/image'
 
@@ -241,12 +241,7 @@ const fetchBooks = async () => {
                 disabled={isSearching}
               />
 
-              {!searchInput && (
-              <button 
-                className='text-white border-2 rounded-full p-1 md:hidden'
-                onClick={() => router.push('/viewallbooks')}> 
-                  View All
-                </button>)}
+
               {searchInput && (
                 <button
                   type="button"
@@ -263,7 +258,14 @@ const fetchBooks = async () => {
                 </div>
               )}
             </div>
+            
           </form>
+          {!searchInput && (
+              <button 
+                className='text-white p-1 md:hidden border-b'
+                onClick={() => router.push('/viewallbooks')}> 
+                  View All
+                </button>)}
         </div>
         </div>
 
@@ -518,7 +520,7 @@ const fetchBooks = async () => {
                       className="text-white font-semibold mb-3 text-center cursor-pointer hover:text-blue-300 transition-colors"
                       onClick={() => router.push('/viewallbooks')}
                     >
-                      <span className='border-b'>View All</span> &gt;
+                      <span className='border-b'>View All</span> <ArrowRight className='w-5 h-5 inline-block' />
                     </h3>
                     <div className="space-y-2 text-sm h-[70vh] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                        {currentPageBooks.map((book) => (
