@@ -4,13 +4,13 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { supabase, Book } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
+import { ArrowLeft } from 'lucide-react'
 
 export default function ViewAllBooks() {
   const [books, setBooks] = useState<Book[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [hoveredBook, setHoveredBook] = useState<Book | null>(null)
-  const [defaultBook, setDefaultBook] = useState<Book | null>(null)
   const router = useRouter()
 
   useEffect(() => {
@@ -36,10 +36,6 @@ export default function ViewAllBooks() {
         setBooks([])
       } else {
         setBooks(data || [])
-        // Set the first book as default if available
-        if (data && data.length > 0) {
-          setDefaultBook(data[0])
-        }
       }
     } catch (error) {
       console.error('Error fetching books:', error)
@@ -94,14 +90,14 @@ export default function ViewAllBooks() {
             onClick={() => router.push('/')}
             className="text-black text-sm hover:underline focus:outline-none mb-4"
           >
-            &lt; Back to Library
+            <ArrowLeft className='w-5 h-5 inline-block' /> Back to Library
           </button>
           
           <div className="text-center">
             <a 
               href='https://docs.google.com/document/d/1GDa9C1okh_iwo2RgMB35RCZU4oCeRCFKHlliBInUDLo/edit?tab=t.0#heading=h.690theuvfh12' 
               target='_blank'
-              className="text-blue-600 text-lg hover:underline focus:outline-none"
+              className="text-[#020eff] text-lg underline focus:outline-none"
             >
               Contribute To The Library!
             </a>
@@ -180,25 +176,25 @@ export default function ViewAllBooks() {
         <div className="w-1/2 relative">
           <div className="h-screen flex items-center justify-center">
             <motion.div
-              key={hoveredBook?.id || defaultBook?.id || 'default'}
+              key={hoveredBook?.id || 'default'}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, ease: "easeOut" }}
               className="relative w-full h-full"
             >
-              {(hoveredBook || defaultBook)?.cover_image_url ? (
+              {hoveredBook?.cover_image_url ? (
                 <img
-                  src={(hoveredBook || defaultBook)?.cover_image_url}
-                  alt={(hoveredBook || defaultBook)?.title}
+                  src={hoveredBook?.cover_image_url}
+                  alt={hoveredBook?.title}
                   className="w-full h-full object-cover"
                 />
               ) : (
                 <div className="w-full h-full bg-gray-100 flex items-center justify-center">
-                  <div className="text-center text-gray-600">
-                    <div className="text-6xl mb-4">🎨</div>
-                    <p className="text-xl font-semibold">Hover over a book</p>
-                    <p className="text-gray-500">to see its cover</p>
-                  </div>
+                  <img
+                    src={"/default.png"}
+                    alt={"Art Workshop"}
+                    className='w-full h-full'
+                  />
                 </div>
               )}
             </motion.div>
@@ -224,18 +220,26 @@ export default function ViewAllBooks() {
           <div className="h-full flex flex-col">
             {/* Header */}
             <div className="mb-8">
+            <div className="">
+            <button
+              onClick={() => router.push('/')}
+              className="text-black hover:underline focus:outline-none"
+            >
+              <ArrowLeft className='w-5 h-5 inline-block' /> Back to Library
+            </button>
+          </div>
               <motion.h1 
-                animate={{
-                  color: ["#ff0000", "#00ff00", "#0000ff", "#00FFFF", "#FF00FF", "#FFFF00"]
-                }}
-              transition = {{
-                // duration: 1,
-                times: [0, 0.2, 0.4, 0.6, 0.8, 1],
-                repeat: Infinity,
-                repeatType: "loop"
+              //   animate={{
+              //     color: ["#ff0000", "#00ff00", "#0000ff", "#00FFFF", "#FF00FF", "#FFFF00"]
+              //   }}
+              // transition = {{
+              //   duration: 3,
+              //   times: [0, 0.2, 0.4, 0.6, 0.8, 1],
+              //   repeat: Infinity,
+              //   repeatType: "loop"
 
-              }}
-              className="text-4xl text-center mb-4 underline"
+              // }}
+              className="text-4xl text-center mb-4 underline text-[#020eff]"
               
               > 
                 <a href='https://docs.google.com/document/d/1GDa9C1okh_iwo2RgMB35RCZU4oCeRCFKHlliBInUDLo/edit?tab=t.0#heading=h.690theuvfh12' target='_blank'>Contribute To The Library!</a>

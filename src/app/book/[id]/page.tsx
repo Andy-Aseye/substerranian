@@ -65,41 +65,33 @@ export default function BookDetailsPage() {
       {/* Mobile Layout */}
       <div className="md:hidden">
         {/* Top Section - Red Background with Back Button and Book Cover */}
-        <div className="bg-red-600 py-8 px-4">
+        <div className="">
           {/* Back Button */}
-          <div className="mb-6">
+          <div className="">
             <button
               onClick={() => router.push('/')}
-              className="text-white text-sm hover:underline focus:outline-none"
+              className="text-white text-sm hover:underline focus:outline-none absolute top-5 left-5 z-10"
             >
-              &lt; Back to Library
+              <ArrowLeft className='w-5 h-5 inline-block' /> Back to Library
             </button>
           </div>
           
           {/* Book Cover */}
-          <div className="flex items-center justify-center">
-            <div className="relative w-48 h-64">
               <Image
                 src={book.cover_image_url}
                 alt={book.title}
                 fill
-                className="object-contain"
+                className="!relative"
                 sizes="(max-width: 768px) 192px"
                 priority
               />
-            </div>
-          </div>
         </div>
 
         {/* Middle Section - Red Background with Large Title */}
-        <div className="bg-red-600 py-8 px-4">
-          <h1 className="text-4xl md:text-5xl font-bold text-black text-center leading-tight">
-            {book.title.toUpperCase()}
-          </h1>
-        </div>
+
 
         {/* Bottom Section - Yellow Background with Details */}
-        <div className="bg-yellow-400 p-6 min-h-screen">
+        <div className="bg-[#E8DE37] p-6 min-h-screen flex flex-col">
           {/* Book Title */}
           <h2 className="text-xl font-bold italic text-black mb-2">
             {book.title}
@@ -149,14 +141,16 @@ export default function BookDetailsPage() {
             </div>
           </div>
           
+          <p className="text-sm text-black mb-2">
+            <span className='font-bold'>ISBN:</span> {book.isbn || ''}
+          </p>
           {/* ISBN and Barcode */}
-          <div className="mt-auto">
-            <p className="text-sm text-black mb-2">
-              ISBN {book.isbn || '978-1-908617-57-6'}
-            </p>
-            <div className="w-full h-12 bg-black/10 border border-black/20 rounded flex items-center justify-center">
-              <span className="text-xs text-black/60">Barcode</span>
-            </div>
+          <div className="mt-auto mx-auto">
+            <img 
+                alt='Barcode' 
+                src={`https://barcode.tec-it.com/barcode.ashx?data=${book.isbn}&code=ISBN13&imagetype=Jpg&bgcolor=E8DE37`}
+                className='mx-auto'
+              />
           </div>
         </div>
       </div>
@@ -179,7 +173,7 @@ export default function BookDetailsPage() {
         {/* Content */}
         <div className="relative z-10 min-h-screen">
           {/* Yellow Card - Positioned absolutely on the left */}
-          <div className="absolute left-0 top-0 h-[100vh] w-[20vw] bg-[#E8DE37] p-6 overflow-y-auto z-20">
+          <div className="absolute left-0 top-0 h-[100vh] w-[20vw] bg-[#E8DE37] p-6 overflow-y-auto z-20 flex flex-col">
             {/* Book Title */}
             <h1 className="text-2xl font-bold text-black mb-2 font-inter">
               {book.title}
@@ -228,15 +222,17 @@ export default function BookDetailsPage() {
                 </a>
               </div>
             </div>
+          
+            <p className="text-sm text-black mb-2 font-inter">
+              <span className='font-bold'>ISBN:</span> {book.isbn || ''}
+            </p>
             
             {/* ISBN and Barcode */}
-            <div className="mt-auto">
-              <p className="text-sm text-black mb-2 font-inter">
-                ISBN {book.isbn || '978-1-908617-57-6'}
-              </p>
-              <div className="w-full h-12 bg-black/10 border border-black/20 rounded flex items-center justify-center">
-                <span className="text-xs text-black/60 font-inter">Barcode</span>
-              </div>
+            <div className="mt-auto mx-auto">
+              <img 
+                alt='Barcode' 
+                src={`https://barcode.tec-it.com/barcode.ashx?data=${book.isbn}&code=ISBN13&imagetype=Jpg&bgcolor=E8DE37`}
+              />
             </div>
           </div>
           <div className='absolute right-20 top-10 space-x-2 text-white hover:underline focus:outline-none z-20'>

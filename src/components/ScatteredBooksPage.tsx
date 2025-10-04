@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import BookCard from './BookCard'
 import { supabase, Book } from '@/lib/supabase'
-import { X } from 'lucide-react'
+import { ArrowRight, X } from 'lucide-react'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
 import Image from 'next/image'
 
@@ -222,7 +222,7 @@ const fetchBooks = async () => {
           src="/logo.png"
           alt="SUBTERRANEA"
           fill
-          // className="object-cover transition-transform duration-300 hover:scale-110"
+          className="!relative md:!w-1/6 !rotate-[3deg]"
           // sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 16vw"
         />
         
@@ -230,7 +230,7 @@ const fetchBooks = async () => {
           {/* <p className="text-white text-sm">I&apos;m looking for...</p> */}
           
           <form onSubmit={handleSearch} className="flex-1 max-w-xs w-full">
-            <div className="relative">
+            <div className="relative flex gap-2">
               <input
                 type="text"
                 name="search"
@@ -240,6 +240,8 @@ const fetchBooks = async () => {
                 className="w-full px-4 py-2 rounded-full bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#020EFF] transition-all duration-200"
                 disabled={isSearching}
               />
+
+
               {searchInput && (
                 <button
                   type="button"
@@ -256,7 +258,14 @@ const fetchBooks = async () => {
                 </div>
               )}
             </div>
+            
           </form>
+          {!searchInput && (
+              <button 
+                className='text-white p-1 md:hidden border-b'
+                onClick={() => router.push('/viewallbooks')}> 
+                  View All
+                </button>)}
         </div>
         </div>
 
@@ -288,7 +297,7 @@ const fetchBooks = async () => {
         {(!isSearchMode || (isSearchMode && searchResults.length > 0)) && (
           <div className="max-w-9xl mx-auto">
           <div 
-            className="grid grid-cols-1 lg:grid-cols-2 relative"
+            className="grid grid-cols-1 lg:grid-cols-2 relative !border-t-0 md:!border-t-2"
             style={{
               borderTop: '2px solid rgba(255,255,255,0.2)',
               borderImage: `
@@ -353,7 +362,7 @@ const fetchBooks = async () => {
             
             {/* Left Page - 7x4 Grid */}
             <div 
-              className="rounded-tl-lg rounded-bl-lg pr-4"
+              className="rounded-tl-lg rounded-bl-lg md:pr-4 !border-r-0 md:!border-r-2"
               style={{
                 borderRight: '2px solid rgba(255,255,255,0.2)',
                 borderImage: `
@@ -415,7 +424,7 @@ const fetchBooks = async () => {
                 filter: 'blur(0.3px)'
               }}
             >
-              <div className="grid grid-cols-5">
+              <div className="grid grid-cols-3 md:grid-cols-5">
                 {leftPage.map((book, index) => (
                   <motion.div
                     key={book.id}
@@ -462,7 +471,7 @@ const fetchBooks = async () => {
               <div className="flex gap-4">
                 {/* Grid Section */}
                 <div className="flex-1">
-                  <div className="grid grid-cols-4 gap-x-1 gap-y-0">
+                  <div className="grid grid-cols-3 md:grid-cols-4 gap-x-1 gap-y-0">
                     {rightPage.map((book, index) => (
                       <motion.div
                         key={book.id}
@@ -511,7 +520,7 @@ const fetchBooks = async () => {
                       className="text-white font-semibold mb-3 text-center cursor-pointer hover:text-blue-300 transition-colors"
                       onClick={() => router.push('/viewallbooks')}
                     >
-                      <span className='border-b'>View All</span> &gt;
+                      <span className='border-b'>View All</span> <ArrowRight className='w-5 h-5 inline-block' />
                     </h3>
                     <div className="space-y-2 text-sm h-[70vh] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                        {currentPageBooks.map((book) => (
