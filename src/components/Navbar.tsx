@@ -37,7 +37,7 @@ export default function Navbar() {
           whileHover={{ scale: 1.05 }}
           className="flex items-center"
         >
-          <h1 className="text-lg font-bold text-white tracking-wider">SUBTERRANEA</h1>
+          <h1 className="text-lg font-bold text-white tracking-wider font-[kudoes] italic">SUBTERRANEA</h1>
         </motion.div>
 
         {/* Search Section - Center */}
