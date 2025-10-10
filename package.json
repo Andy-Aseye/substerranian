@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@next/font": "^14.2.15",
     "@supabase/supabase-js": "^2.56.0",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.12",

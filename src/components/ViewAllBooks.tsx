@@ -62,7 +62,7 @@ export default function ViewAllBooks() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-900">
         <div className="text-center text-white">
-          <h2 className="text-2xl font-bold text-red-400 mb-4">Error Loading Books</h2>
+          <h2 className="text-2xl font-bold text-[#a3352e] mb-4">Error Loading Books</h2>
           <p className="text-gray-300">{error}</p>
         </div>
       </div>
@@ -88,7 +88,7 @@ export default function ViewAllBooks() {
         <div className="p-4">
           <button
             onClick={() => router.push('/')}
-            className="text-black text-sm hover:underline focus:outline-none mb-4"
+            className="text-black text-sm hover:underline focus:outline-none mb-4 hover:text-[#385C8C] transition-colors font-semibold"
           >
             <ArrowLeft className='w-5 h-5 inline-block' /> Back to Library
           </button>
@@ -97,7 +97,7 @@ export default function ViewAllBooks() {
             <a 
               href='https://docs.google.com/document/d/1GDa9C1okh_iwo2RgMB35RCZU4oCeRCFKHlliBInUDLo/edit?tab=t.0#heading=h.690theuvfh12' 
               target='_blank'
-              className="text-[#020eff] text-lg underline focus:outline-none"
+              className="text-[#385C8C] text-lg underline focus:outline-none"
             >
               Contribute To The Library!
             </a>
@@ -105,9 +105,9 @@ export default function ViewAllBooks() {
         </div>
 
         {/* Blue Banner */}
-        <div className="bg-[#020eff] py-6 px-4">
+        <div className="bg-[#385C8C] py-6 px-4">
           <div className="text-center text-white">
-            <div className="text-lg font-bold uppercase tracking-wider">SUBTERRANEA</div>
+            <div className="text-lg font-bold uppercase tracking-wider font-[kudoes] italic">SUBTERRANEA</div>
             <div className="text-lg font-bold uppercase tracking-wider">AFRICAN ARTISTS LIBRARY</div>
           </div>
         </div>
@@ -122,7 +122,7 @@ export default function ViewAllBooks() {
                 <div
                   key={book.id}
                   onClick={() => handleBookClick(book)}
-                  className="cursor-pointer hover:text-blue-600 transition-colors"
+                  className="cursor-pointer hover:text-[#385C8C] transition-colors"
                 >
                   <div className="text-black font-mono font-bold">
                     AB - {book.title}
@@ -140,7 +140,7 @@ export default function ViewAllBooks() {
                 <div
                   key={book.id}
                   onClick={() => handleBookClick(book)}
-                  className="cursor-pointer hover:text-blue-600 transition-colors"
+                  className="cursor-pointer hover:text-[#385C8C] transition-colors"
                 >
                   <div className="text-black font-mono font-bold">
                     M - {book.title}
@@ -158,7 +158,7 @@ export default function ViewAllBooks() {
                 <div
                   key={book.id}
                   onClick={() => handleBookClick(book)}
-                  className="cursor-pointer hover:text-blue-600 transition-colors"
+                  className="cursor-pointer hover:text-[#385C8C] transition-colors"
                 >
                   <div className="text-black font-mono font-bold">
                     Demo - {book.title}
@@ -202,7 +202,7 @@ export default function ViewAllBooks() {
         </div>
 
         {/* Blue Divider with Text */}
-        <div className="w-14 bg-[#020eff] flex items-center justify-center relative">
+        <div className="w-14 bg-[#385C8C] flex items-center justify-center relative">
           <div 
             className="text-white font-semibold text-sm tracking-wider"
             style={{
@@ -211,7 +211,8 @@ export default function ViewAllBooks() {
               transform: 'rotate(180deg)'
             }}
           >
-            SUBTERRANEA | AFRICAN ARTISTS LIBRARY
+            <span className='font-[kudoes] italic'>SUBTERRANEA </span>
+             | AFRICAN ARTISTS LIBRARY
           </div>
         </div>
 
@@ -223,9 +224,9 @@ export default function ViewAllBooks() {
             <div className="">
             <button
               onClick={() => router.push('/')}
-              className="text-black hover:underline focus:outline-none"
+              className="text-black hover:underline focus:outline-none hover:text-[#385C8C] transition-colors font-semibold"
             >
-              <ArrowLeft className='w-5 h-5 inline-block' /> Back to Library
+              <ArrowLeft className='w-5 h-5 inline-block ' /> Back to Library
             </button>
           </div>
               <motion.h1 
@@ -239,7 +240,7 @@ export default function ViewAllBooks() {
               //   repeatType: "loop"
 
               // }}
-              className="text-4xl text-center mb-4 underline text-[#020eff]"
+              className="text-4xl text-center mb-4 underline text-[#385C8C]"
               
               > 
                 <a href='https://docs.google.com/document/d/1GDa9C1okh_iwo2RgMB35RCZU4oCeRCFKHlliBInUDLo/edit?tab=t.0#heading=h.690theuvfh12' target='_blank'>Contribute To The Library!</a>
@@ -251,7 +252,7 @@ export default function ViewAllBooks() {
               <div className="space-y-6">
                 {/* Artist Book Section */}
                 <div>
-                  <h2 className="text-lg font-semibold text-red-400 mb-1">Artist Book</h2>
+                  <h2 className="text-lg font-semibold text-[#a3352e] mb-1">Artist Book</h2>
                   <div className="space-y-0">
                     {books.filter(book => book.category === 'artist-book' || !book.category).slice(0, 5).map((book, index) => (
                       <motion.div
@@ -264,7 +265,7 @@ export default function ViewAllBooks() {
                         onClick={() => handleBookClick(book)}
                         className="group cursor-pointer"
                       >
-                        <div className="text-gray-600 hover:text-blue-600 transition-colors">
+                        <div className="text-gray-600 hover:text-[#385C8C] transition-colors">
                           <span className="font-medium">AB—</span>
                           {book.title}
                           {index < 3 && <sup className="text-xs ml-1">{index + 1}</sup>}
@@ -276,7 +277,7 @@ export default function ViewAllBooks() {
 
                 {/* Magazine Section */}
                 <div>
-                  <h2 className="text-lg font-semibold text-red-400 mb-1">Magazine</h2>
+                  <h2 className="text-lg font-semibold text-[#a3352e] mb-1">Magazine</h2>
                   <div className="space-y-2">
                     {books.filter(book => book.category === 'magazine').slice(0, 4).map((book, index) => (
                       <motion.div
@@ -289,7 +290,7 @@ export default function ViewAllBooks() {
                         onClick={() => handleBookClick(book)}
                         className="group cursor-pointer"
                       >
-                        <div className="text-black hover:text-blue-600 transition-colors">
+                        <div className="text-black hover:text-[#385C8C] transition-colors">
                           <span className="font-medium">M—</span>
                           {book.title}
                           {index < 2 && <sup className="text-xs ml-1">{index + 4}</sup>}
@@ -301,7 +302,7 @@ export default function ViewAllBooks() {
 
                 {/* Demo Section */}
                 <div>
-                  <h2 className="text-lg font-semibold text-red-400 mb-1">Demo-</h2>
+                  <h2 className="text-lg font-semibold text-[#a3352e] mb-1">Demo-</h2>
                   <div className="space-y-2">
                     {books.filter(book => book.category === 'demo').slice(0, 3).map((book, index) => (
                       <motion.div
@@ -314,7 +315,7 @@ export default function ViewAllBooks() {
                         onClick={() => handleBookClick(book)}
                         className="group cursor-pointer"
                       >
-                        <div className="text-black hover:text-blue-600 transition-colors">
+                        <div className="text-black hover:text-[#385C8C] transition-colors">
                           <span className="font-medium">Demo—</span>
                           {book.title}
                           {index < 2 && <sup className="text-xs ml-1">{index + 6}</sup>}
@@ -326,7 +327,7 @@ export default function ViewAllBooks() {
 
                 {/* Digi Files Section */}
                 <div>
-                  <h2 className="text-lg font-semibold text-red-400 mb-1">Digi Files-</h2>
+                  <h2 className="text-lg font-semibold text-[#a3352e] mb-1">Digi Files-</h2>
                   <div className="space-y-2">
                     {books.filter(book => book.category === 'digital').slice(0, 2).map((book, index) => (
                       <motion.div
@@ -339,7 +340,7 @@ export default function ViewAllBooks() {
                         onClick={() => handleBookClick(book)}
                         className="group cursor-pointer"
                       >
-                        <div className="text-black hover:text-blue-600 transition-colors">
+                        <div className="text-black hover:text-[#385C8C] transition-colors">
                           <span className="font-medium">Digi Files—</span>
                           {book.title}
                           {index < 1 && <sup className="text-xs ml-1">{index + 8}</sup>}
@@ -351,7 +352,7 @@ export default function ViewAllBooks() {
 
                 {/* Cargo Section */}
                 <div>
-                  <h2 className="text-lg font-semibold text-red-400 mb-1">Cargo (Sample)</h2>
+                  <h2 className="text-lg font-semibold text-[#a3352e] mb-1">Cargo (Sample)</h2>
                   <div className="space-y-2">
                     {books.filter(book => book.category === 'cargo').slice(0, 2).map((book, index) => (
                       <motion.div
@@ -364,7 +365,7 @@ export default function ViewAllBooks() {
                         onClick={() => handleBookClick(book)}
                         className="group cursor-pointer"
                       >
-                        <div className="text-black hover:text-blue-600 transition-colors">
+                        <div className="text-black hover:text-[#385C8C] transition-colors">
                           <span className="font-medium">Cargo</span>
                           {book.title}
                           {index < 1 && <sup className="text-xs ml-1">{index + 9}</sup>}

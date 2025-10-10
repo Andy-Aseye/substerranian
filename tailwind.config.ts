@@ -29,6 +29,9 @@ const config: Config = {
           '50%': { transform: 'translateY(-10px)' },
         },
       },
+      fontFamily: {
+        sans: ['var(--font-hauora)', 'var(--font-kudoes)']
+      }
     },
   },
   plugins: [],

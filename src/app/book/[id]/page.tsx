@@ -72,7 +72,7 @@ export default function BookDetailsPage() {
               onClick={() => router.push('/')}
               className="text-white text-sm hover:underline focus:outline-none absolute top-5 left-5 z-10"
             >
-              <ArrowLeft className='w-5 h-5 inline-block' /> Back to Library
+              <ArrowLeft className='w-5 h-5 inline-block hover:text-[#385C8C] transition-colors font-semibold' /> Back to Library
             </button>
           </div>
           
@@ -91,7 +91,7 @@ export default function BookDetailsPage() {
 
 
         {/* Bottom Section - Yellow Background with Details */}
-        <div className="bg-[#E8DE37] p-6 min-h-screen flex flex-col">
+        <div className="bg-[#DEE837] p-6 min-h-screen flex flex-col">
           {/* Book Title */}
           <h2 className="text-xl font-bold italic text-black mb-2">
             {book.title}
@@ -103,14 +103,14 @@ export default function BookDetailsPage() {
           </p>
           
           {/* Book Description */}
-          <div className="mb-6">
+          {/* <div className="mb-6">
             <p className="text-sm text-black leading-relaxed">
               {book.description}
             </p>
-          </div>
+          </div> */}
           
           {/* Purchase Information */}
-          <div className="mb-6 space-y-2">
+          {/* <div className="mb-6 space-y-2">
             <div className="flex justify-between items-start">
               <span className="text-sm text-black">Buy here:</span>
               <span className="text-sm font-semibold text-black text-right">
@@ -123,32 +123,50 @@ export default function BookDetailsPage() {
                 {book.external_link ? 'Available' : 'N/A'}
               </span>
             </div>
-          </div>
+          </div> */}
           
-          {/* Location Information */}
-          <div className="mb-6">
-            <p className="text-sm text-black mb-2">
-              Come and see this book at
+            {/* Location Information */}
+          
+            <p className="text-sm text-black mb-2 font-inter">
+              <span className='font-bold'>Availability:</span> {book.external_link ? 'Available' : 'N/A'}
+            </p>           
+          
+            <p className="text-sm text-black mb-2 font-inter">
+              <span className='font-bold'>Publisher:</span> {"Penguin books" || ''}
+            </p>           
+          
+            <p className="text-sm text-black mb-2 font-inter">
+              <span className='font-bold'>Year of Publication:</span> {"2025"|| ''}
             </p>
-            <p className="text-sm font-semibold text-black">
-              The House of Annetta
+          
+            <p className="text-sm text-black mb-2 font-inter">
+              <span className='font-bold'>Binding:</span> {"Hardcover"|| ''}
             </p>
-            <div className="flex items-center text-sm text-black">
-              <MapPin className="w-4 h-4 mr-2" />
-              <a href='https://maps.app.goo.gl/xGb4pyZVQ7V8bPe79' target='_blank' className='cursor-pointer hover:text-blue-900 transition-colors'>
-                25 Princelet St, London E1 6QH
-              </a>
+          
+            <p className="text-sm text-black mb-2 font-inter">
+              <span className='font-bold'>Genre:</span> {"Fiction"|| ''}
+            </p>
+
+            <div className="mb-6">
+              <p className="text-sm text-black mb-2 font-inter">
+                Come and see this book at
+              </p>
+              <p className="text-sm font-semibold text-black font-inter">
+                The House of Annetta
+              </p>
+              <div className="flex items-center text-sm text-black font-inter">
+                <MapPin className="w-4 h-4 mr-2" />
+                <a href='https://maps.app.goo.gl/xGb4pyZVQ7V8bPe79' target='_blank' className='cursor-pointer hover:text-blue-900 transition-colors'>
+                  25 Princelet St, London E1 6QH
+                </a>
+              </div>
             </div>
-          </div>
-          
-          <p className="text-sm text-black mb-2">
-            <span className='font-bold'>ISBN:</span> {book.isbn || ''}
-          </p>
+
           {/* ISBN and Barcode */}
           <div className="mt-auto mx-auto">
             <img 
                 alt='Barcode' 
-                src={`https://barcode.tec-it.com/barcode.ashx?data=${book.isbn}&code=ISBN13&imagetype=Jpg&bgcolor=E8DE37`}
+                src={`https://barcode.tec-it.com/barcode.ashx?data=${book.isbn}&code=ISBN13&imagetype=Jpg&bgcolor=DEE837`}
                 className='mx-auto'
               />
           </div>
@@ -173,7 +191,7 @@ export default function BookDetailsPage() {
         {/* Content */}
         <div className="relative z-10 min-h-screen">
           {/* Yellow Card - Positioned absolutely on the left */}
-          <div className="absolute left-0 top-0 h-[100vh] w-[20vw] bg-[#E8DE37] p-6 overflow-y-auto z-20 flex flex-col">
+          <div className="absolute left-0 top-0 h-[100vh] w-[20vw] bg-[#DEE837] p-6 overflow-y-auto z-20 flex flex-col">
             {/* Book Title */}
             <h1 className="text-2xl font-bold text-black mb-2 font-inter">
               {book.title}
@@ -185,30 +203,51 @@ export default function BookDetailsPage() {
             </p>
             
             {/* Book Description */}
-            <div className="mb-6">
+            {/* <div className="mb-6">
               <p className="text-sm text-black leading-relaxed font-inter">
                 {book.description}
               </p>
-            </div>
+            </div> */}
             
             {/* Purchase Information */}
             <div className="mb-6 space-y-2">
-              <div className="flex justify-between items-start">
+              {/* <div className="flex justify-between items-start">
                 <span className="text-sm text-black font-inter">Buy here:</span>
                 <span className="text-sm font-semibold text-black font-inter text-right">
                   {book.title}
                 </span>
-              </div>
-              <div className="flex justify-between items-start">
-                <span className="text-sm text-black font-inter">Online:</span>
+              </div> */}
+              {/* <div className="flex justify-between items-start">
+                <span className="text-sm text-black font-inter">Availability:</span>
                 <span className="text-sm font-semibold text-black font-inter">
                   {book.external_link ? 'Available' : 'N/A'}
                 </span>
-              </div>
+              </div> */}
             </div>
             
             {/* Location Information */}
-            <div className="mb-6">
+          
+            <p className="text-sm text-black mb-2 font-inter">
+              <span className='font-bold'>Availability:</span> {book.external_link ? 'Available' : 'N/A'}
+            </p>           
+          
+            <p className="text-sm text-black mb-2 font-inter">
+              <span className='font-bold'>Publisher:</span> {"Penguin books" || ''}
+            </p>           
+          
+            <p className="text-sm text-black mb-2 font-inter">
+              <span className='font-bold'>Year of Publication:</span> {"2025"|| ''}
+            </p>
+          
+            <p className="text-sm text-black mb-2 font-inter">
+              <span className='font-bold'>Binding:</span> {"Hardcover"|| ''}
+            </p>
+          
+            <p className="text-sm text-black mb-2 font-inter">
+              <span className='font-bold'>Genre:</span> {"Fiction"|| ''}
+            </p>
+
+            <div className="m-auto">
               <p className="text-sm text-black mb-2 font-inter">
                 Come and see this book at
               </p>
@@ -222,20 +261,16 @@ export default function BookDetailsPage() {
                 </a>
               </div>
             </div>
-          
-            <p className="text-sm text-black mb-2 font-inter">
-              <span className='font-bold'>ISBN:</span> {book.isbn || ''}
-            </p>
             
             {/* ISBN and Barcode */}
             <div className="mt-auto mx-auto">
               <img 
                 alt='Barcode' 
-                src={`https://barcode.tec-it.com/barcode.ashx?data=${book.isbn}&code=ISBN13&imagetype=Jpg&bgcolor=E8DE37`}
+                src={`https://barcode.tec-it.com/barcode.ashx?data=${book.isbn}&code=ISBN13&imagetype=Jpg&bgcolor=DEE837`}
               />
             </div>
           </div>
-          <div className='absolute right-20 top-10 space-x-2 text-white hover:underline focus:outline-none z-20'>
+          <div className='absolute right-20 top-10 space-x-2 text-white hover:underline hover:text-[#385C8C] focus:outline-none z-20 transition-colors font-semibold'>
             <div onClick={() => router.push('/')} className='flex items-center space-x-2 cursor-pointer' >
             <ArrowLeft className='w-5 h-5' /> <p><em>Back to Library</em></p>
             </div>

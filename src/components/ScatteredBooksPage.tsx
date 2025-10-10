@@ -214,7 +214,8 @@ const fetchBooks = async () => {
         <div className='flex flex-col md:flex-row justify-between items-center mb-2 gap-4 md:gap-0'>
         <div className="text-center">
           <h1 className="text-lg font-bold text-white tracking-widest">
-            SUBTERRANEA&apos;S INVENTORY
+            <span className='font-[kudoes] italic'>SUBTERRANEA&apos;S </span>
+            <span className='font-normal'>INVENTORY</span>
           </h1>
         </div>
 
@@ -237,7 +238,7 @@ const fetchBooks = async () => {
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 placeholder="I&apos;m looking for..."
-                className="w-full px-4 py-2 rounded-full bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#020EFF] transition-all duration-200"
+                className="w-full px-4 py-2 rounded-full bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#385C8C] transition-all duration-200"
                 disabled={isSearching}
               />
 
@@ -262,7 +263,7 @@ const fetchBooks = async () => {
           </form>
           {!searchInput && (
               <button 
-                className='text-white p-1 md:hidden border-b'
+                className='text-white p-1 md:hidden border-b hover:text-[#385C8C]'
                 onClick={() => router.push('/viewallbooks')}> 
                   View All
                 </button>)}
@@ -458,7 +459,7 @@ const fetchBooks = async () => {
                     <div className="transform scale-75 origin-center">
                       <BookCard book={book} />
                     </div>
-                     <div className='flex justify-end hidden md:block'><span className='text-white absolute bottom-3'><span className='text-white absolute bottom-3 w-6 h-6 bg-gray-800 border border-white rounded-full flex items-center justify-center text-xs font-bold'>
+                     <div className='flex justify-end hidden md:block'><span className='text-[#385C8C] absolute bottom-3'><span className='text-white absolute bottom-3 w-6 h-6 bg-gray-800 border border-white rounded-full flex items-center justify-center text-xs font-bold'>
                          {book.booknumber}
                        </span></span></div>
                   </motion.div>
@@ -505,7 +506,7 @@ const fetchBooks = async () => {
                         <div className="transform scale-[0.70] origin-center">
                           <BookCard book={book} />
                         </div>
-                         <div className='flex justify-end hidden md:block'><span className='text-white absolute bottom-3'><span className='text-white absolute bottom-3 w-6 h-6 bg-gray-800 border border-white rounded-full flex items-center justify-center text-xs font-bold'>
+                         <div className='flex justify-end hidden md:block'><span className='text-[#385C8C] absolute bottom-3'><span className='text-white absolute bottom-3 w-6 h-6 bg-gray-800 border border-white rounded-full flex items-center justify-center text-xs font-bold'>
                          {book.booknumber}
                        </span></span></div>
                       </motion.div>
@@ -517,10 +518,10 @@ const fetchBooks = async () => {
                 <div className="w-36 flex-shrink-0 hidden md:block">
                   <div className="rounded-lg p-4">
                     <h3 
-                      className="text-white font-semibold mb-3 text-center cursor-pointer hover:text-blue-300 transition-colors"
+                      className="text-white font-semibold mb-3 hover:underline text-center cursor-pointer hover:hover:text-[#385C8C] transition-colors"
                       onClick={() => router.push('/viewallbooks')}
                     >
-                      <span className='border-b'>View All</span> <ArrowRight className='w-5 h-5 inline-block' />
+                      <span className=''>View All</span> <ArrowRight className='w-5 h-5 inline-block' />
                     </h3>
                     <div className="space-y-2 text-sm h-[70vh] overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                        {currentPageBooks.map((book) => (
@@ -534,7 +535,7 @@ const fetchBooks = async () => {
                            onMouseEnter={() => setHoveredBookId(book.id)}
                            onMouseLeave={() => setHoveredBookId(null)}
                          >
-                           <p className="text-white">{book.booknumber}. </p>
+                           <p className="text-[#385C8C]">{book.booknumber}. </p>
                            <p className="text-white text-xs">{book.title}</p>
                          </div>
                        ))}
