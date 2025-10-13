@@ -214,8 +214,8 @@ const fetchBooks = async () => {
         <div className='flex flex-col md:flex-row justify-between items-center mb-2 gap-4 md:gap-0'>
         <div className="text-center">
           <h1 className="text-lg font-bold text-white tracking-widest">
-            <span className='font-[kudoes] italic'>SUBTERRANEA&apos;S </span>
-            <span className='font-normal'>INVENTORY</span>
+            <span className='font-[kudoes] italic'>THE INVENTORY </span>
+            {/* <span className='font-normal'>INVENTORY</span> */}
           </h1>
         </div>
 
@@ -223,7 +223,7 @@ const fetchBooks = async () => {
           src="/logo.png"
           alt="SUBTERRANEA"
           fill
-          className="!relative md:!w-1/6 !rotate-[3deg]"
+          className="!relative !w-1/2 md:!w-1/6 scale-150 md:scale-150"
           // sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 16vw"
         />
         
@@ -238,7 +238,7 @@ const fetchBooks = async () => {
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 placeholder="I&apos;m looking for..."
-                className="w-full px-4 py-2 rounded-full bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#385C8C] transition-all duration-200"
+                className="w-full px-4 py-2 rounded-full text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#385C8C] transition-all duration-200"
                 disabled={isSearching}
               />
 
@@ -578,7 +578,6 @@ const fetchBooks = async () => {
               <ChevronRight size={20} />
             </motion.button> */}
            {/* </div> */}
-           
          </div>
         )}
       </div>

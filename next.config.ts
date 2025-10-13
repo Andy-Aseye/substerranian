@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
       "cdn.pixabay.com",
       "via.placeholder.com",
       "covers.openlibrary.org",
+      'drive.google.com'
     ],
   },
 };

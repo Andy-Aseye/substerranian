@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { Book } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
+import { formatDriveLink } from '../../utils/formatDriveLink'
 
 interface BookCardProps {
   book: Book
@@ -25,11 +26,11 @@ export default function BookCard({ book }: BookCardProps) {
       }}
       whileTap={{ scale: 0.95 }}
       onClick={handleClick}
-      className="book-card cursor-pointer bg-white rounded-lg shadow-lg overflow-hidden"
+      className="book-card cursor-pointer rounded-lg shadow-lg overflow-hidden"
     >
       <div className="relative aspect-[3/4] overflow-hidden">
         <Image
-          src={book.cover_image_url}
+          src={formatDriveLink(book.cover_image_url)}
           alt={book.title}
           fill
           className="object-cover transition-transform duration-300 hover:scale-110"

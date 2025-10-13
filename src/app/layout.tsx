@@ -88,7 +88,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${merriweather.variable} ${hauora.className} ${kudoes.className} font-sans antialiased`} suppressHydrationWarning={true}>
+      <body className={`${inter.variable} ${merriweather.variable} ${hauora.className} ${kudoes.className} font-sans antialiased lg:overflow-hidden`} suppressHydrationWarning={true}>
         <div className="bg-black-50 font-[hauora]">
           {children}
         </div>

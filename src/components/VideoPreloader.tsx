@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Play, Pause, Volume2, VolumeX } from 'lucide-react'
+import Image from 'next/image'
 
 interface WelcomeTextProps {
   isVisible: boolean
@@ -15,20 +16,21 @@ interface PreloaderAnimationProps {
 }
 
 const WelcomeText = ({ isVisible, onComplete }: WelcomeTextProps) => {
-  const words = ["WELCOME", "TO", "SUBTERRANEA", "LIBRARY"]
+  const prefix_words = ["(AFRI)ART", "LIBRARY"]
+  const sufix_words = ["DESIGN", "AGENCY"]
   
   return (
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          className="fixed inset-0 flex items-center justify-center z-50"
+          className="fixed inset-0 flex flex-col items-center justify-center z-50 font-[kudoes] font-normal"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.5 }}
         >
           <div className="text-center">
-            {words.map((word, index) => (
+            {prefix_words.map((word, index) => (
               <motion.div
                 key={word}
                 className="overflow-hidden"
@@ -37,7 +39,7 @@ const WelcomeText = ({ isVisible, onComplete }: WelcomeTextProps) => {
                 exit={{ 
                   opacity: 0, 
                   x: index % 2 === 0 ? -100 : 100,
-                  transition: { delay: index * 0.1, duration: 0.6 }
+                  transition: { delay: index * 0.1, duration: 60000 }
                 }}
                 transition={{ 
                   delay: index * 0.2, 
@@ -45,7 +47,7 @@ const WelcomeText = ({ isVisible, onComplete }: WelcomeTextProps) => {
                   ease: "easeOut"
                 }}
                 onAnimationComplete={() => {
-                  if (index === words.length - 1) {
+                  if (index === prefix_words.length - 1) {
                     setTimeout(onComplete, 2000) // Wait 2s before starting preloader
                   }
                 }}
@@ -63,7 +65,50 @@ const WelcomeText = ({ isVisible, onComplete }: WelcomeTextProps) => {
                 </h1>
               </motion.div>
             ))}
-          </div>
+            <Image
+            src="/logo2.png"
+            alt="SUBTERRANEA"
+            fill
+            className="!relative !h-auto md:scale-50"
+            // sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 16vw"
+          />
+
+          {sufix_words.map((word, index) => (
+              <motion.div
+                key={word}
+                className="overflow-hidden"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ 
+                  opacity: 0, 
+                  x: index % 2 === 0 ? -100 : 100,
+                  transition: { delay: index * 0.1, duration: 0.6 }
+                }}
+                transition={{ 
+                  delay: index * 0.2, 
+                  duration: 0.8,
+                  ease: "easeOut"
+                }}
+                onAnimationComplete={() => {
+                  if (index === sufix_words.length - 1) {
+                    setTimeout(onComplete, 2000) // Wait 2s before starting preloader
+                  }
+                }}
+              >
+                <h1 
+                  className="text-3xl md:text-5xl font-black tracking-widest mb-4 font-inter"
+                  style={{
+                    background: 'linear-gradient(135deg, #d1d5db 0%, #ffffff 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                  }}
+                >
+                  {word}
+                </h1>
+              </motion.div>
+            ))}
+                      </div>
         </motion.div>
       )}
     </AnimatePresence>
@@ -175,7 +220,8 @@ export default function VideoPreloader({ onComplete }: { onComplete: () => void 
   const handleWelcomeComplete = () => {
     setShowWelcome(false)
     setTimeout(() => {
-      setShowPreloader(true)
+      // setShowPreloader(true)
+      onComplete()
     }, 500)
   }
 
@@ -245,29 +291,11 @@ export default function VideoPreloader({ onComplete }: { onComplete: () => void 
                   timeZone: 'Europe/London' 
                 })} GMT
               </div>
-              <div><p className='text-xs'>Powered by:</p><p  className="text-sm font-bold">Create with Iridescence</p></div>
              
             </motion.div>
 
             {/* Right Side - Sound Control */}
-            <motion.div 
-              className="absolute right-6 top-1/2 transform -translate-y-1/2 z-20"
-              exit={{ opacity: 0, x: 20 }}
-              transition={{ duration: 0.5 }}
-            >
-              <motion.button
-                onClick={toggleMute}
-                className="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center hover:bg-white/10 transition-colors transform rotate-90 origin-center"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {isMuted ? (
-                  <VolumeX size={30} className="text-white" />
-                ) : (
-                  <Volume2 size={30} className="text-white" />
-                )}
-              </motion.button>
-            </motion.div>
+
 
             {/* Bottom Bar */}
             <motion.div 
@@ -280,7 +308,7 @@ export default function VideoPreloader({ onComplete }: { onComplete: () => void 
                   <div>
                     <div className="text-2xl font-bold">Maya Angelou | Noble Story</div>
                   </div>
-                  <motion.button
+                  {/* <motion.button
                     onClick={togglePlayPause}
                     className="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center hover:bg-white/10 transition-colors"
                     whileHover={{ scale: 1.05 }}
@@ -291,25 +319,44 @@ export default function VideoPreloader({ onComplete }: { onComplete: () => void 
                     ) : (
                       <Play size={20} className="text-white ml-1" />
                     )}
-                  </motion.button>
+                  </motion.button> */}
+                  <motion.button
+                onClick={toggleMute}
+                className="w-12 h-12 rounded-full border-2 border-white flex items-center justify-center hover:bg-white/10 transition-colors transform rotate-90 origin-center"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {isMuted ? (
+                  <VolumeX size={30} className="text-white" />
+                ) : (
+                  <Volume2 size={30} className="text-white" />
+                )}
+              </motion.button>
+            <motion.div 
+              className="transform -translate-y-1/2 z-20"
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.5 }}
+            >
+
+            </motion.div>
                 </div>
               </div>
 
               {/* Progress Bar */}
-              <div className="mb-2">
+              {/* <div className="mb-2">
                 <div className="w-full h-0.5 bg-white/30 rounded-full overflow-hidden">
                   <div
                     className="h-full bg-white transition-all duration-75 ease-linear"
                     style={{ width: `${progressPercentage}%` }}
                   />
                 </div>
-              </div>
+              </div> */}
 
               {/* Time Display */}
-              <div className="flex justify-between items-center mb-2">
+              {/* <div className="flex justify-between items-center mb-2">
                 <div className="text-sm font-mono">{formatTime(currentTime)}</div>
                 <div className="text-sm font-mono">{formatTime(duration)}</div>
-              </div>
+              </div> */}
 
             
             </motion.div>
@@ -326,10 +373,10 @@ export default function VideoPreloader({ onComplete }: { onComplete: () => void 
       />
 
       {/* Preloader Animation */}
-      <PreloaderAnimation 
+      {/* <PreloaderAnimation 
         isVisible={showPreloader} 
         onComplete={handlePreloaderComplete}
-      />
+      /> */}
     </div>
   )
 }
