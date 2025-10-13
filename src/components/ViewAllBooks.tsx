@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { supabase, Book } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
 import { ArrowLeft } from 'lucide-react'
+import { formatDriveLink } from '../../utils/formatDriveLink'
 
 export default function ViewAllBooks() {
   const [books, setBooks] = useState<Book[]>([])
@@ -16,6 +17,18 @@ export default function ViewAllBooks() {
   useEffect(() => {
     fetchBooks()
   }, [])
+
+    // Group books by genre
+    const booksByGenre = books.reduce((acc, book) => {
+      const genre = book.genre || "Uncategorized"; // fallback if missing genre
+      if (!acc[genre]) acc[genre] = [];
+      acc[genre].push(book);
+      return acc;
+    }, {} as Record<string, typeof books>);
+  
+    // Extract genres (to control render order)
+    const genres = Object.keys(booksByGenre);
+  
 
   const fetchBooks = async () => {
     try {
@@ -114,8 +127,44 @@ export default function ViewAllBooks() {
 
         {/* Content Sections */}
         <div className="p-4 space-y-6">
+        <div className="space-y-8">
+      {genres.map((genre, genreIndex) => (
+        <div key={genre}>
+          {/* Genre Heading */}
+          <h2 className="text-lg font-semibold text-[#a3352e] mb-2">
+            {genre}
+          </h2>
+
+          {/* Books under that genre */}
+          <div className="space-y-2">
+            {booksByGenre[genre].map((book, index) => (
+              <motion.div
+                key={book.id}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: (genreIndex * 0.3) + (index * 0.05) }}
+                onMouseEnter={() => setHoveredBook(book)}
+                onMouseLeave={() => setHoveredBook(null)}
+                onClick={() => handleBookClick(book)}
+                className="group cursor-pointer"
+              >
+                <div className="text-black hover:text-[#385C8C] transition-colors">
+                  <span className="font-medium">
+                    {genre.slice(0, 2).toUpperCase()}—
+                  </span>
+                  {book.title}
+                  <sup>
+                    {book.booknumber}
+                  </sup>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
           {/* Artist Book Section */}
-          <div>
+          {/* <div>
             <h2 className="text-lg font-bold text-red-600 mb-2">Artist Book</h2>
             <div className="space-y-1">
               {books.filter(book => book.category === 'artist-book' || !book.category).slice(0, 4).map((book, index) => (
@@ -125,15 +174,15 @@ export default function ViewAllBooks() {
                   className="cursor-pointer hover:text-[#385C8C] transition-colors"
                 >
                   <div className="text-black font-mono font-bold">
-                    AB - {book.title}
+                    AB - {book.genre}
                   </div>
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
 
           {/* Magazine Section */}
-          <div>
+          {/* <div>
             <h2 className="text-lg font-bold text-red-600 mb-2">Magazine</h2>
             <div className="space-y-1">
               {books.filter(book => book.category === 'magazine').slice(0, 4).map((book, index) => (
@@ -148,10 +197,10 @@ export default function ViewAllBooks() {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
 
           {/* Demo Section */}
-          <div>
+          {/* <div>
             <h2 className="text-lg font-bold text-red-600 mb-2">Etc.</h2>
             <div className="space-y-1">
               {books.filter(book => book.category === 'demo').slice(0, 3).map((book, index) => (
@@ -166,7 +215,7 @@ export default function ViewAllBooks() {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -184,7 +233,7 @@ export default function ViewAllBooks() {
             >
               {hoveredBook?.cover_image_url ? (
                 <img
-                  src={hoveredBook?.cover_image_url}
+                  src={formatDriveLink(hoveredBook?.cover_image_url)}
                   alt={hoveredBook?.title}
                   className="w-full h-full object-cover"
                 />
@@ -250,130 +299,43 @@ export default function ViewAllBooks() {
             {/* Book List */}
             <div className="flex-1 overflow-y-auto">
               <div className="space-y-6">
-                {/* Artist Book Section */}
-                <div>
-                  <h2 className="text-lg font-semibold text-[#a3352e] mb-1">Artist Book</h2>
-                  <div className="space-y-0">
-                    {books.filter(book => book.category === 'artist-book' || !book.category).slice(0, 5).map((book, index) => (
-                      <motion.div
-                        key={book.id}
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: index * 0.05 }}
-                        onMouseEnter={() => setHoveredBook(book)}
-                        onMouseLeave={() => setHoveredBook(null)}
-                        onClick={() => handleBookClick(book)}
-                        className="group cursor-pointer"
-                      >
-                        <div className="text-gray-600 hover:text-[#385C8C] transition-colors">
-                          <span className="font-medium">AB—</span>
-                          {book.title}
-                          {index < 3 && <sup className="text-xs ml-1">{index + 1}</sup>}
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
+<div className="h-[80vh] overflow-y-auto no-scrollbar">
+      {genres.map((genre, genreIndex) => (
+        <div key={genre}>
+          {/* Genre Heading */}
+          <h2 className="text-lg font-semibold text-[#a3352e] mb-2">
+            {genre}
+          </h2>
 
-                {/* Magazine Section */}
-                <div>
-                  <h2 className="text-lg font-semibold text-[#a3352e] mb-1">Magazine</h2>
-                  <div className="space-y-2">
-                    {books.filter(book => book.category === 'magazine').slice(0, 4).map((book, index) => (
-                      <motion.div
-                        key={book.id}
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: (index + 5) * 0.05 }}
-                        onMouseEnter={() => setHoveredBook(book)}
-                        onMouseLeave={() => setHoveredBook(null)}
-                        onClick={() => handleBookClick(book)}
-                        className="group cursor-pointer"
-                      >
-                        <div className="text-black hover:text-[#385C8C] transition-colors">
-                          <span className="font-medium">M—</span>
-                          {book.title}
-                          {index < 2 && <sup className="text-xs ml-1">{index + 4}</sup>}
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
+          {/* Books under that genre */}
+          <div className="space-y-2">
+            {booksByGenre[genre].map((book, index) => (
+              <motion.div
+                key={book.id}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: (genreIndex * 0.3) + (index * 0.05) }}
+                onMouseEnter={() => setHoveredBook(book)}
+                onMouseLeave={() => setHoveredBook(null)}
+                onClick={() => handleBookClick(book)}
+                className="group cursor-pointer"
+              >
+                <div className="text-black hover:text-[#385C8C] transition-colors">
+                  <span className="font-medium">
+                    {genre.slice(0, 2).toUpperCase()}—
+                  </span>
+                  {book.title}
+                  <sup>
+                    {book.booknumber}
+                  </sup>
                 </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
 
-                {/* Demo Section */}
-                <div>
-                  <h2 className="text-lg font-semibold text-[#a3352e] mb-1">Demo-</h2>
-                  <div className="space-y-2">
-                    {books.filter(book => book.category === 'demo').slice(0, 3).map((book, index) => (
-                      <motion.div
-                        key={book.id}
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: (index + 9) * 0.05 }}
-                        onMouseEnter={() => setHoveredBook(book)}
-                        onMouseLeave={() => setHoveredBook(null)}
-                        onClick={() => handleBookClick(book)}
-                        className="group cursor-pointer"
-                      >
-                        <div className="text-black hover:text-[#385C8C] transition-colors">
-                          <span className="font-medium">Demo—</span>
-                          {book.title}
-                          {index < 2 && <sup className="text-xs ml-1">{index + 6}</sup>}
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Digi Files Section */}
-                <div>
-                  <h2 className="text-lg font-semibold text-[#a3352e] mb-1">Digi Files-</h2>
-                  <div className="space-y-2">
-                    {books.filter(book => book.category === 'digital').slice(0, 2).map((book, index) => (
-                      <motion.div
-                        key={book.id}
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: (index + 12) * 0.05 }}
-                        onMouseEnter={() => setHoveredBook(book)}
-                        onMouseLeave={() => setHoveredBook(null)}
-                        onClick={() => handleBookClick(book)}
-                        className="group cursor-pointer"
-                      >
-                        <div className="text-black hover:text-[#385C8C] transition-colors">
-                          <span className="font-medium">Digi Files—</span>
-                          {book.title}
-                          {index < 1 && <sup className="text-xs ml-1">{index + 8}</sup>}
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Cargo Section */}
-                <div>
-                  <h2 className="text-lg font-semibold text-[#a3352e] mb-1">Cargo (Sample)</h2>
-                  <div className="space-y-2">
-                    {books.filter(book => book.category === 'cargo').slice(0, 2).map((book, index) => (
-                      <motion.div
-                        key={book.id}
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: (index + 14) * 0.05 }}
-                        onMouseEnter={() => setHoveredBook(book)}
-                        onMouseLeave={() => setHoveredBook(null)}
-                        onClick={() => handleBookClick(book)}
-                        className="group cursor-pointer"
-                      >
-                        <div className="text-black hover:text-[#385C8C] transition-colors">
-                          <span className="font-medium">Cargo</span>
-                          {book.title}
-                          {index < 1 && <sup className="text-xs ml-1">{index + 9}</sup>}
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
               </div>
             </div>
           </div>
